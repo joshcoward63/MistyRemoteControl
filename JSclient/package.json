@@ -5,11 +5,24 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "set PORT=5503 && node src/index.js"
+    "start": "set PORT=5503 && react-scripts start"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "react-scripts": "^3.4.3",
     "socket.io-client": "^2.3.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

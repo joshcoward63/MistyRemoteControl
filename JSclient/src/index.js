@@ -12,6 +12,7 @@ client = io.connect("http://192.168.0.14:5503");
 var greenButton = document.getElementById("greenButton");
 var blueButton = document.getElementById("blueButton");
 var redButton = document.getElementById("redButton");
+var raiseLeftArm = document.getElementById("raiseLeftArm");
 
 //Change color to green
 greenButton.onclick = function(){
@@ -25,3 +26,8 @@ blueButton.onclick = function(){
 redButton.onclick = function(){
   client.emit("color",{"red": 255,"green": 0,"blue": 0});
 }
+
+raiseLeftArm.onclick = function(){
+  client.emit("leftArm",{"Arm": "left" , "Position": -90, "Velocity": 100});
+}
+

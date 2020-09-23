@@ -31,7 +31,19 @@ io.to(socket.id).emit("hey");
  	socket.on("color", function jsConfig(data){
  		socket.broadcast.emit("data", JSON.stringify(data));
  		console.log(JSON.stringify(data));
- 	})
+	 })
+	 
+	 //Controls movement of left arm
+	 socket.on("leftArm", function leftArm(data){
+		 socket.broadcast.emit("leftArm",JSON.stringify(data));
+		 console.log(JSON.stringify(data))
+	 })
+
+	 //Controls movement of right arm
+	 socket.on("rightArm", function leftArm(data){
+		socket.broadcast.emit("rightArm",JSON.stringify(data));
+		console.log(JSON.stringify(data))
+	})
 
 
  }
