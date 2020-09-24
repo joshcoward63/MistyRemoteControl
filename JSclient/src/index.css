@@ -1,22 +1,30 @@
+  .title {
+    text-align: center;
+    font-size: 32px;
+    font-style: inherit;
+    width: 100%;
+    padding: 2%;
+    background-color: #65489D;
+    color: white;
+  }
+
 body {
     background-color: #000;
-    padding: 20px;
+    text-align: center;
+    padding: 0px;
   }
+
   .button1{background-color: #4CAF50;} /* Green */
   .button2 {background-color: #008CBA;} /* Blue */
-  .button3 {background-color: red;}/* red*/
-  .button4 {background-color: #65489D;}
+  .button3 {background-color: red;}/* red*/  
 
 
   .button1:hover {
-    background-color: lightgreen;
-  }
+    background-color: lightgreen;}
   .button2:hover {
-    background-color: lightblue;
-  }
+    background-color: lightblue;}
   .button3:hover {
-    background-color: lightcoral;
-  }
+    background-color: lightcoral;}
   h1{
     color: #fff;
   }
@@ -30,18 +38,42 @@ body {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-    
+  }
+
+  #raise{
+    display: flex;
+    justify-content: space-between;
+  }
+  #point{
+    display: flex;
+    justify-content: space-between;
+  }
+  #lower{
+    display: flex;
+    justify-content: space-between;
   }
   .leftArm{
+    background-color: #65489D;
     border: none;
     color: white;
-
+    display: flex;
+    margin: 4px 2px;
+    padding: 15px 32px;
+    width: 100px;
   }
 
-  .title {
-    text-align: center;
-    width: 100%;
-    padding: 2%;
+  .leftArm:hover{background-color: #b38fdb;}
+
+  .rightArm{
     background-color: #65489D;
+    border: none;
     color: white;
+    display: flex;
+    margin: 4px 2px;
+    padding: 15px 32px;
+    width: 100px; 
+  }
+
+  .rightArm:hover{
+    background-color: #b38fdb;
   }

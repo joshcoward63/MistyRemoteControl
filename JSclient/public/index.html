@@ -6,7 +6,7 @@
     <script src="https://localhost:5500/socket.io/2.3.0/socket.io.js"></script>
     
     <title>Socket Chat</title>
-     <div class ="title"><Text id="main-heading" type="secondary" style={{ fontSize: '100px' }}>Misty Remote Control Center</Text>
+     <div class ="title"><Text id="main-heading" type="secondary">Misty Remote Control Center</Text>
     </div>
 </head>
 
@@ -17,8 +17,25 @@
     <button id = "greenButton" class="button button1">Green</button>
     <button id ="blueButton" class="button button2">Blue</button>
     <button id = "redButton" class="button button3">Red</button>
-    <button id = "raiseLeftArm" class ="leftArm button4">Raise Left Hand</button>
 
+    <div id = "raise">
+    <button id = "raiseLeftArm" class ="leftArm button4">Raise Left Hand</button>
+    <button id = "raiseRightArm" class="rightArm button7">Raise Right Hand</button>
+    </div>
+
+    <div id = "point">
+    <button id = "pointLeftArm" class ="leftArm button5">Point Left Hand</button>
+    <button id = "pointRightArm" class="rightArm button7">Point Right Hand</button>
+    </div>
+    <div id = "lower">
+    <button id = "lowerLeftArm" class ="leftArm button6">Lower Left Hand</button>
+    <button id = "lowerRightArm" class="rightArm button7">Lower Right Hand</button>
+    </div>
+
+   
+    
+    
+    
     
     <div id = "root"</div>
 </body>

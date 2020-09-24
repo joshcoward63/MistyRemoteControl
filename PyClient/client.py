@@ -36,7 +36,7 @@ def disconnect():
     print("I'm disconnected!")
 
 if __name__=="__main__":
-    sio.connect('http://192.168.0.14:5503')
+    sio.connect('http://132.178.227.12:5503')
     robot = Robot('192.168.0.5')
     # print("succcess")
     #sio.wait()
