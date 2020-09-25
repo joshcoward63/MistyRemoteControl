@@ -59,6 +59,7 @@ class Robot:
         resp = resp.json()
         reply = resp['result']
         print(reply)
+        return reply
 
     def battery(self):
         resp = requests.get('http://{}/api/battery'.format(self.ip))

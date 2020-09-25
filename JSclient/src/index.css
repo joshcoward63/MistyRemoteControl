@@ -9,6 +9,7 @@
   }
 
   img{
+    display: inline-block;
     width: 400px;
     height: 300px;
   }
@@ -17,6 +18,14 @@ body {
     background-color: #000;
     text-align: center;
     padding: 0px;
+  }
+  #streamVideo{
+    border: none;
+    display: inline;
+    color: white;
+    background-color: #65489D;
+    padding: 15px 32px;
+    text-align: center;
   }
 
   .button1{background-color: #4CAF50;} /* Green */
@@ -46,9 +55,6 @@ body {
     cursor: pointer;
   }
 
-
-
-
    .head{
     border: none;
     color: white;
@@ -58,73 +64,115 @@ body {
     text-align: center;
     margin: 4px 2px;
     width: 200px;
-  }
+  } 
   .head:hover{
     background-color: #b38fdb;
   }
 
-
-  .grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1.1fr 1.4fr 0.5fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-    gap: 1px 1px;
-    grid-template-areas:
-      ". . . . . . . . . . ."
-      "rL . . pic pic pic pic pic . . rR"
-      "pL . . pic pic pic pic pic . . pR"
-      "lL . . pic pic pic pic pic . . lR"
-      ". . . . . . . . . . .";
-  }
-  .rL { grid-area: rL; }
-  .lL { grid-area: lL; }
-  .pL { grid-area: pL; }
-  .pic { grid-area: pic; }
-  .rR { grid-area: rR; }
-  .pR { grid-area: pR; }
-  .lR { grid-area: lR; }
-
-    .rL,.lL, .pL, .lL, .rR, .pR, .lR{
-    background-color: #65489D;
-    border: none;
-    color: white;
-    display: flex;
-    margin: 4px 2px;
-    padding: 15px 32px;
-    width: 100px;
-  }
- /* #raise{
-    display: flex;
-    justify-content: space-between;
-  }
-  #point{
-    display: flex;
-    justify-content: space-between;
-  }
-  #lower{
-    display: flex;
-    justify-content: space-between;
+  .grid-container{
+  display : block;
+  width : 1000px;
+  overflow : auto;
+  margin : 0 auto;
   }
 
-
-  #pointRightArm{
-    height: 75px;     
+  .pageBarLeft{
+  float : left;
+  clear : none;
+  min-width : 80px;
+  min-height : 80px;
+  }
+  .rL{
+  background-color : #65489D;
+  color: white;
+  float : none;
+  clear : both;
+  height : 100px;
+  width : 100px;
+  }
+  .pL{
+  background-color : #65489D;
+  color: white;
+  float : none;
+  clear : both;
+  height : 100px;
+  width : 100px;
+  }
+  .lL{
+  background-color : #65489D;
+  color: white;
+  float : none;
+  clear : both;
+  height : 100px;
+  width : 100px;
+  }
+  .pageContent{
+  background-color : #000;
+  float : left;
+  clear : none;
+  height : 1000px;
+  width : 800px;
+  }
+  .pageBarRight{
+  float : left;
+  clear : none;
+  min-width : 80px;
+  min-height : 80px;
+  }
+  .rR{
+  background-color : #65489D;
+  color: white;
+  float : none;
+  clear : both;
+  height : 100px;
+  width : 100px;
+  }
+  .pR{
+  background-color : #65489D;
+  color: white;
+  float : none;
+  clear : both;
+  height : 100px;
+  width : 100px;
+  }
+  .lR{
+  background-color: #65489D;
+  color: white;
+  float : none;
+  clear : both;
+  height : 100px;
+  width : 100px;
+  }
+  .pageBottom{
+    float: left;
+    clear: none;
+    height: 200px;
+    width: 1000px;
   }
 
-  #pointLeftArm{
-    height: 75px;
-  }
-  .leftArm:hover{background-color: #b38fdb;}
-  .rightArm{
-    background-color: #65489D;
-    border: none;
-    color: white;
-    display: flex;
-    margin: 4px 2px;
-    padding: 15px 32px;
-    width: 100px; 
-  }
-
-  .rightArm:hover{
+  .rL:hover{
     background-color: #b38fdb;
-  } */
+  }
+  .pL:hover{
+    background-color: #b38fdb;
+  }
+
+  .lL:hover{
+    background-color: #b38fdb;
+  }
+
+  .rR:hover{
+    background-color: #b38fdb;
+  }
+
+  .pR:hover{
+    background-color: #b38fdb;
+  }
+
+  .lR:hover{
+    background-color: #b38fdb;
+  }
+  
+  #streamVideo:hover{
+    background-color: #b38fdb;
+  }

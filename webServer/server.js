@@ -33,18 +33,21 @@ io.to(socket.id).emit("hey");
  		console.log(JSON.stringify(data));
 	 })
 	 
-	 //Controls movement of left arm
-	 socket.on("leftArm", function leftArm(data){
-		 socket.broadcast.emit("leftArm",JSON.stringify(data));
+	 //Controls movement of arms
+	 socket.on("arm", function leftArm(data){
+		 socket.broadcast.emit("arm",JSON.stringify(data));
 		 console.log(JSON.stringify(data))
 	 })
 
-	 //Controls movement of right arm
-	 socket.on("rightArm", function leftArm(data){
-		socket.broadcast.emit("rightArm",JSON.stringify(data));
-		console.log(JSON.stringify(data))
-	})
+	 socket.on("requestVideo", function requestVideo(data){
+		 socket.broadcast.emit("requestVideo", JSON.stringify(data));
+		 console.log("Requested Video");
+	 })
 
+	 socket.on("getVideo", function getVideo(data){
+		 socket.broadcast.emit("getVideo", JSON.stringify(data));
+		 console.log("Getting Video");
+	 })
 
  }
 

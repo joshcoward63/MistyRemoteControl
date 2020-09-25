@@ -34,21 +34,44 @@ redButton.onclick = function(){
 }
 
 raiseLeftArm.onclick = function(){
-  client.emit("leftArm",{"Arm": "left" , "Position": -90, "Velocity": 100});
+  client.emit("arm",{"Arm": "left" , "Position": -90, "Velocity": 100});
 }
 pointLeftArm.onclick =function(){
-  client.emit("leftArm", {"Arm":"left","Positon": 0, "Velocity": 100});
+  client.emit("arm", {"Arm":"left","Positon": 0, "Velocity": 100});
 }
 lowerLeftArm.onclick =function(){
-  client.emit("leftArm", {"Arm":"left","Positon": 90, "Velocity": 100});
+  client.emit("arm", {"Arm":"left","Positon": 90, "Velocity": 100});
 }
 
 raiseRightArm.onclick = function(){
-  client.emit("rightArm",{"Arm": "right" , "Position": -90, "Velocity": 100});
+  client.emit("arm",{"Arm": "right" , "Position": -90, "Velocity": 100});
 }
 pointRightArm.onclick =function(){
-  client.emit("rightArm", {"Arm":"right","Positon": 0, "Velocity": 100});
+  client.emit("arm", {"Arm":"right","Positon": 0, "Velocity": 100});
 }
 lowerRightArm.onclick =function(){
-  client.emit("rightArm", {"Arm":"right","Positon": 90, "Velocity": 100});
+  client.emit("arm", {"Arm":"right","Positon": 90, "Velocity": 100});
 }
+
+
+var streamVideo = document.getElementById("streamVideo");
+
+streamVideo.onclick = function(){
+  if(document.getElementById("streamVideo").innerText === "Start Video Stream"){
+    document.getElementById("streamVideo").innerText = "Stop Video Stream";
+    client.emit("requestVideo", {"Bool": "True"});
+  }
+  else{
+    document.getElementById("streamVideo").innerText = "Start Video Stream"
+  }
+}
+while(document.getElementById("streamVideo").innerText === "Stop Video Stream"){
+  client.on("getVideo", function streamvid(data){
+  var y = JSON.stringify(data);
+  
+  })
+}
+client.emit("requestVideo", {"Bool": "False"});
+
+  
+
