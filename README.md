@@ -39,7 +39,7 @@
 2. Enter the following commands:
     
 	```
-	pip install socketio requests base64
+	pip install python-socketio==4.4.0 requests base64
 	```
 	
 ### If running program off of Boise State's VPN the IP addresses in the files client.py and index.js will need to be changed to match the
