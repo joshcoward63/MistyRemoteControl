@@ -1,7 +1,7 @@
 //This file creates a Web server
 var express = require('express');
 var app = express();
-
+global.atob = require("atob");
 //Server is listening on port 5503
 var server = app.listen(5503);
 
@@ -29,7 +29,7 @@ io.to(socket.id).emit("hey");
  //function looks for a client who sends "color" and then broadcasts the data to all the clients except the one who sent it
  //This function changes the color of Mistys LED
  	socket.on("color", function jsConfig(data){
- 		socket.broadcast.emit("data", JSON.stringify(data));
+ 		socket.broadcast.emit("color", JSON.stringify(data));
  		console.log(JSON.stringify(data));
 	 })
 	 
@@ -48,6 +48,8 @@ io.to(socket.id).emit("hey");
 		 socket.broadcast.emit("getVideo", JSON.stringify(data));
 		 console.log("Getting Video");
 	 })
+   
+
 
  }
 

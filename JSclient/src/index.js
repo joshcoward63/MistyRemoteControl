@@ -8,7 +8,7 @@ const io = require("socket.io-client"),
 client = io.connect("http://192.168.0.14:5503");
 
 //The following buttons change the color of Misty when clicked on in the browser
-
+console.log("hello");
 var greenButton = document.getElementById("greenButton");
 var blueButton = document.getElementById("blueButton");
 var redButton = document.getElementById("redButton");
@@ -37,20 +37,20 @@ raiseLeftArm.onclick = function(){
   client.emit("arm",{"Arm": "left" , "Position": -90, "Velocity": 100});
 }
 pointLeftArm.onclick =function(){
-  client.emit("arm", {"Arm":"left","Positon": 0, "Velocity": 100});
+  client.emit("arm", {"Arm":"left", "Position": 0, "Velocity": 100});
 }
 lowerLeftArm.onclick =function(){
-  client.emit("arm", {"Arm":"left","Positon": 90, "Velocity": 100});
+  client.emit("arm", {"Arm":"left", "Position": 90, "Velocity": 100});
 }
 
 raiseRightArm.onclick = function(){
   client.emit("arm",{"Arm": "right" , "Position": -90, "Velocity": 100});
 }
 pointRightArm.onclick =function(){
-  client.emit("arm", {"Arm":"right","Positon": 0, "Velocity": 100});
+  client.emit("arm", {"Arm":"right", "Position": 0, "Velocity": 100});
 }
 lowerRightArm.onclick =function(){
-  client.emit("arm", {"Arm":"right","Positon": 90, "Velocity": 100});
+  client.emit("arm", {"Arm":"right", "Position": 90, "Velocity": 100});
 }
 
 
@@ -60,18 +60,26 @@ streamVideo.onclick = function(){
   if(document.getElementById("streamVideo").innerText === "Start Video Stream"){
     document.getElementById("streamVideo").innerText = "Stop Video Stream";
     client.emit("requestVideo", {"Bool": "True"});
+    
   }
   else{
     document.getElementById("streamVideo").innerText = "Start Video Stream"
+    client.emit("requestVideo", {"Bool": "False"})
   }
 }
 while(document.getElementById("streamVideo").innerText === "Stop Video Stream"){
+
   client.on("getVideo", function streamvid(data){
-  var y = JSON.stringify(data);
   
+  var x = data["key"];
+  console.log(atob(x));
+  console.log("test");
+  var image = new Image();
+  image.src = x;
+  document.getElementById("videoSpot").src = image;
   })
 }
-client.emit("requestVideo", {"Bool": "False"});
+
 
   
 

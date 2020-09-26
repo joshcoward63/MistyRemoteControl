@@ -58,7 +58,7 @@ class Robot:
         resp = requests.get('http://{}/api/cameras/rgb?Base64=true'.format(self.ip))
         resp = resp.json()
         reply = resp['result']
-        print(reply)
+        # print(reply)
         return reply
 
     def battery(self):
