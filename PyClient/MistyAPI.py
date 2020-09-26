@@ -184,6 +184,16 @@ class Robot:
     def clear_learned_faces(self):
         requests.delete('http://'+self.ip+'/api/faces')
         self.faces_saved = []
+
+    def enable_avstream(self):
+        print(requests.post('http://'+self.ip+'/api/services/avstreaming/enable'))
+
+    def disable_avstream(self):
+        print(requests.post('http://'+self.ip+'/api/avstreaming/stop'))
+
+    def stream_av(self):
+        print(requests.post('http://'+self.ip+'/api/avstreaming/start',json={"URL": "rtspd:1936", "Width":640, "Height": 480}))
+
     
     def learn_face(self,name):
         assert isinstance(name, str), " trainFace: name must be a string"
