@@ -3,10 +3,10 @@ var express = require('express');
 var app = express();
 global.atob = require("atob");
 //Server is listening on port 5503
-var server = app.listen(5503);
+var server = app.listen(5505);
 
 app.use(express.static('public'));
-console.log("Listening on port 5503");
+console.log("Listening on port 5505");
 
 var socket = require('socket.io');
 
@@ -45,21 +45,10 @@ io.to(socket.id).emit("hey");
 	 })
 
 	 socket.on("getVideo", function getVideo(data){
-		 socket.broadcast.emit("getVideo", JSON.stringify(data));
+		 socket.broadcast.emit("getVideo", data);
 		 console.log("Getting Video");
 	 })
    
 
 
  }
-
-
-
-
-
-
-
-
-
-
-

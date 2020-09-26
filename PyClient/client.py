@@ -29,14 +29,10 @@ def messageStream(data):
     y = json.loads(data)
         
     while y["Bool"] != "False":
-        time.sleep(0.5)
+        time.sleep(0.25)
         pic = Robot.take_picture(robot)     
-        
-        imgdata = base64.b64decode(pic["base64"])    
-        filename = "image.jpg"
-        with open(filename, 'wb') as f:
-            f.write(imgdata)            
-        sio.emit("getVideo", {"KEY": pic["base64"]})
+        imgdata = base64.b64decode(pic["base64"])       
+        sio.emit("getVideo",imgdata )
 # When the socket connects    
 @sio.event
 def connect():
@@ -53,20 +49,8 @@ def disconnect():
     print("I'm disconnected!")
 
 if __name__=="__main__":
-    sio.connect('http://192.168.0.14:5503')
+    sio.connect('http://192.168.0.14:5505')
     robot = Robot('192.168.0.7')
     # print("succcess")
     #sio.wait()
-
-# x = Robot.take_picture(robot)
-# imgdata = base64.b64decode(x["base64"])
-# filename = 'some_image.jpg'  # I assume you have a way of picking unique filenames
-# with open(filename, 'wb') as f:
-#     f.write(imgdata)
-
-# print("done")
-# while True:
-#     time.sleep(2)
-#     sio.emit("boobs", {"Person": "john"})
-
 

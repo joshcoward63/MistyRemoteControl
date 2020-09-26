@@ -5,7 +5,7 @@ import './index.css'
 const io = require("socket.io-client"),
 
 //Creates a client that connects ot server at the specified address
-client = io.connect("http://192.168.0.14:5503");
+client = io.connect("http://192.168.0.14:5505");
 
 //The following buttons change the color of Misty when clicked on in the browser
 console.log("hello");
@@ -60,25 +60,32 @@ streamVideo.onclick = function(){
   if(document.getElementById("streamVideo").innerText === "Start Video Stream"){
     document.getElementById("streamVideo").innerText = "Stop Video Stream";
     client.emit("requestVideo", {"Bool": "True"});
+  
+    console.log("first");
+    client.on("getVideo", function streamvid(data){   
+      // var img = new Image();
+      // img.src = data;
+
+      var arrayBufferView = new Uint8Array( data );
+      var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
+      var urlCreator = window.URL || window.webkitURL;
+      var imageUrl = urlCreator.createObjectURL( blob );
     
+
+      document.getElementById("videoSpot").setAttribute("src", imageUrl);
+     
+    })
   }
   else{
     document.getElementById("streamVideo").innerText = "Start Video Stream"
     client.emit("requestVideo", {"Bool": "False"})
   }
-}
-while(document.getElementById("streamVideo").innerText === "Stop Video Stream"){
 
-  client.on("getVideo", function streamvid(data){
-  
-  var x = data["key"];
-  console.log(atob(x));
-  console.log("test");
-  var image = new Image();
-  image.src = x;
-  document.getElementById("videoSpot").src = image;
-  })
 }
+  
+
+
+
 
 
   
