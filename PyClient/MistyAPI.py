@@ -192,7 +192,7 @@ class Robot:
         print(requests.post('http://'+self.ip+'/api/avstreaming/stop'))
 
     def stream_av(self):
-        print(requests.post('http://'+self.ip+'/api/avstreaming/start',json={"URL": "rtspd:1936", "Width":640, "Height": 480}))
+        print(requests.post('http://'+self.ip+'/api/avstreaming/start',json={"URL": "rtspd:1936", "Width":640, "Height": 480, 'FrameRate':30}))
 
     
     def learn_face(self,name):

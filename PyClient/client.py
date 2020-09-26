@@ -8,7 +8,10 @@ from PIL import Image
 from MistyAPI import Robot
 from io import BytesIO
 import base64
+import pyaudio
+import av
 from PIL import Image
+import io
 
 import cv2
 
@@ -20,17 +23,6 @@ robot = Robot(robot_ip)
 # robot.disable_avstream()
 robot.enable_avstream()
 robot.stream_av()
-# player=vlc.MediaPlayer()
-# cap = cv2.VideoCapture('rtsp://{}:1936'.format(robot_ip))
-
-# while(cap.isOpened()):
-#     ret, frame = cap.read()
-#     print(type(frame))
-#     cv2.imshow('frame', frame)
-#     if cv2.waitKey(20) & 0xFF == ord('q'):
-#         break
-# cap.release()
-# cv2.destroyAllWindows()
 
 sio.connect('http://192.168.1.132:5505')
 
@@ -48,31 +40,43 @@ def message2(data):
     robot.move_arm(y["Arm"], y['Position'], y['Velocity'])
 
 
+@sio.on('requestAudio')
+def messageStream2(data):
+
+    stream_path = 'rtsp://{}:1936'.format(robot_ip)
+    container = av.open(stream_path)
+    input_stream = container.streams.get(audio=0)[0]
+
+    # output_container = av.open('live_stream.mp3', 'w')
+    # output_stream = output_container.add_stream('mp3')
+
+    for frame in container.decode(input_stream):
+        frame.pts = None
+        frame.to_ndarray() # <-- this needs to be sent to the jsserver->client to play the audio in the browser
+        
+        # for packet in output_stream.encode(frame):
+            # output_container.mux(packet)
+
+    # for packet in output_stream.encode(None):
+        # output_container.mux(packet)
+
+    # output_container.close()  
+
 @sio.on('requestVideo')
 def messageStream(data):
     global robot
-    y = json.loads(data)
 
-    cap = cv2.VideoCapture('rtsp://{}:1936'.format(robot_ip))
+    stream_path = 'rtsp://{}:1936'.format(robot_ip)
+    container = av.open(stream_path)
 
-    while(cap.isOpened()):
-        ret, image = cap.read()
-        retval, buffer = cv2.imencode('.jpg', image)
-        # imgdata = base64.b64encode(buffer)
-        # frame = Image.fromarray(image)
-        sio.emit("getVideo", buffer.tobytes())
-        # cv2.imshow('frame', image)
-        # if cv2.waitKey(20) & 0xFF == ord('q'):
-        #     break
-    # cap.release()
-    # cv2.destroyAllWindows()
-        
-    # while y["Bool"] != "False":
-    #     # time.sleep(0.03)
-    #     pic = robot.take_picture() 
-    #     print(list(pic.keys()))
-    #     imgdata = base64.b64decode(pic["base64"])       
-    #     sio.emit("getVideo",imgdata)
+    for frame in container.decode(video=0):
+        image = frame.to_image()
+        image = image.rotate(270)
+        imgByteArr = io.BytesIO()
+        image.save(imgByteArr, format='JPEG')
+        imgByteArr = imgByteArr.getvalue()
+        sio.emit("getVideo", imgByteArr)
+
 # When the socket connects    
 @sio.event
 def connect():
