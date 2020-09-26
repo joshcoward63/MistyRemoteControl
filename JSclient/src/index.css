@@ -7,11 +7,19 @@
     background-color: #65489D;
     color: white;
   }
+  .pic {  
+    -webkit-transform:rotate(90deg);  
+    -moz-transform: rotate(90deg);  
+    -ms-transform: rotate(90deg);  
+    -o-transform: rotate(90deg);  
+    transform: rotate(90deg);  
+  } 
 
   img{
     display: inline-block;
-    width: 400px;
-    height: 300px;
+    width: 300px;
+    height: 400px;
+
   }
 
 body {
