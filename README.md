@@ -19,7 +19,9 @@
 	
 	
 4. If both are installed enter the folowing:
-	npm install express socket.io
+    ```
+	npm install express socket.io atob
+	```
 	
 ## JavaScript Brower
 ### Prior to running the JavaScript browser to access Misty's remote control perform the following commands:
@@ -37,16 +39,9 @@
 2. Enter the following commands:
     
 	```
-	pip install socket.io
+	pip install python-socketio==4.4.0 requests base64
 	```
 	
-	```
-	pip install requests
-	```
-	
-	```
-	pip install base64
-    ```
 ### If running program off of Boise State's VPN the IP addresses in the files client.py and index.js will need to be changed to match the
 IP address of the machine in which you plan to run the node server on.
 
