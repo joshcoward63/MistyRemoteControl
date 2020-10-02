@@ -8,23 +8,24 @@ from PIL import Image
 from MistyAPI import Robot
 from io import BytesIO
 import base64
-import pyaudio
+# import pyaudio
 import av
 from PIL import Image
 import io
+import wavio
 
 import cv2
 
 
 #Creates the client
 sio = socketio.Client()
-robot_ip = '192.168.1.137'
+robot_ip = '192.168.0.5'
 robot = Robot(robot_ip)
 # robot.disable_avstream()
 robot.enable_avstream()
 robot.stream_av()
 
-sio.connect('http://192.168.1.132:5505')
+sio.connect('http://192.168.0.14:5505')
 
 
 @sio.on('color')
@@ -52,7 +53,12 @@ def messageStream2(data):
 
     for frame in container.decode(input_stream):
         frame.pts = None
-        frame.to_ndarray() # <-- this needs to be sent to the jsserver->client to play the audio in the browser
+        frame.to_ndarray() # <-- this needs to be sent to the jsserver->client to play the audio in the browser\
+
+        #Its a mess right now
+        # print(str(type(frame.to_ndarray())) + "\n" + str(type(frame)))
+        # wavio.write("audio.wav", frame.to_ndarray(), 22050, sampwidth=3)
+        # sio.emit("getVideo", "audio.wav")
         
         # for packet in output_stream.encode(frame):
             # output_container.mux(packet)
@@ -98,3 +104,6 @@ def disconnect():
     # print("succcess")
     #sio.wait()
 
+def encode_audio(audio):
+    audio_content = audio.read()
+    return base64.b64decode(audio_content)

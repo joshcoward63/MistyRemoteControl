@@ -49,6 +49,15 @@ io.to(socket.id).emit("hey");
 		 console.log("Getting Video");
 	 })
    
+	 socket.on("requestAudio", function requestVideo(data){
+		socket.broadcast.emit("requestAudio", JSON.stringify(data));
+		console.log("Requested Audio");
+	})
+
+	socket.on("getAudio", function getVideo(data){
+		socket.broadcast.emit("getAudio", data);
+		console.log("Getting Audio");
+	})
 
 
  }

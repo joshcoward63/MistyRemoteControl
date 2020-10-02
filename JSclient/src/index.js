@@ -59,7 +59,8 @@ var streamVideo = document.getElementById("streamVideo");
 streamVideo.onclick = function(){
   if(document.getElementById("streamVideo").innerText === "Start Video Stream"){
     document.getElementById("streamVideo").innerText = "Stop Video Stream";
-    client.emit("requestVideo", {"Bool": "True"});
+    // client.emit("requestVideo", {"Bool": "True"});
+    client.emit("requestAudio");
   
     console.log("first");
     client.on("getVideo", function streamvid(data){   
@@ -74,6 +75,13 @@ streamVideo.onclick = function(){
 
       document.getElementById("videoSpot").setAttribute("src", imageUrl);
      
+    })
+
+    client.on("getAudio", function getAudio(data){
+      var array = Array.from(data);
+      var arrayBufferView2 = new Uint8Array(array);
+      var blob2 = new Blob( [arrayBufferView2], {type: "audio/wav" })
+      document.getElementById("audioSpot").setAttribute("src",window.URL.createObjectURL(blob2));
     })
   }
   else{
