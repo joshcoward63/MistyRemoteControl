@@ -11,13 +11,14 @@ import base64
 import av
 from PIL import Image
 import io
+import wavio
 
 
 
 
 #Creates the client
 sio = socketio.Client()
-robot_ip = '192.168.1.137'
+robot_ip = '192.168.0.5'
 robot = Robot(robot_ip)
 # robot.disable_avstream()
 robot.enable_avstream()
@@ -103,3 +104,6 @@ def disconnect():
     # print("succcess")
     #sio.wait()
 
+def encode_audio(audio):
+    audio_content = audio.read()
+    return base64.b64decode(audio_content)
