@@ -8,12 +8,11 @@ from PIL import Image
 from MistyAPI import Robot
 from io import BytesIO
 import base64
-import pyaudio
 import av
 from PIL import Image
 import io
 
-import cv2
+
 
 
 #Creates the client
@@ -24,7 +23,7 @@ robot = Robot(robot_ip)
 robot.enable_avstream()
 robot.stream_av()
 
-sio.connect('http://192.168.1.132:5505')
+sio.connect('http://192.168.1.135:5505')
 
 
 @sio.on('color')
@@ -42,25 +41,31 @@ def message2(data):
 
 @sio.on('requestAudio')
 def messageStream2(data):
-
     stream_path = 'rtsp://{}:1936'.format(robot_ip)
-    container = av.open(stream_path)
-    input_stream = container.streams.get(audio=0)[0]
+    next_container = av.open(stream_path)
+    next_stream = next_container.streams.get(audio=0)[0]
 
-    # output_container = av.open('live_stream.mp3', 'w')
-    # output_stream = output_container.add_stream('mp3')
+    # next_container = av.open('live_stream.wav', 'r')
+    # next_stream = next_container.streams.get(audio=0)[0]
 
-    for frame in container.decode(input_stream):
+    out = io.BytesIO()
+    output_container = av.open(out, 'w', format='wav')
+    output_stream = output_container.add_stream('pcm_s16le', rate=44100)
+
+
+
+    for frame in next_container.decode(next_stream):
         frame.pts = None
-        frame.to_ndarray() # <-- this needs to be sent to the jsserver->client to play the audio in the browser
-        
-        # for packet in output_stream.encode(frame):
-            # output_container.mux(packet)
 
-    # for packet in output_stream.encode(None):
-        # output_container.mux(packet)
+        for packet in output_stream.encode(frame):
+            output_container.mux(packet)
 
-    # output_container.close()  
+        sio.emit("getAudio", out.read())
+
+        # for packet in output_stream.encode(None):
+        #     output_container.mux(packet)   
+        # output_container.close()         
+     
 
 @sio.on('requestVideo')
 def messageStream(data):
