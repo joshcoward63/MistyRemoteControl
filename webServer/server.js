@@ -14,6 +14,7 @@ var socket = require('socket.io');
 var io = socket(server);
 
 
+
 io.sockets.on('connection', newConnection);
 io.to(socket.id).emit("hey");
  function newConnection(socket){
@@ -48,6 +49,17 @@ io.to(socket.id).emit("hey");
 		 socket.broadcast.emit("getVideo", data);
 		 console.log("Getting Video");
 	 })
+
+	 socket.on("requestAudio", function requestAudio(data){
+		socket.broadcast.emit("requestAudio", JSON.stringify(data));
+		console.log("Requested Audio");
+	})
+
+	socket.on("getAudio", function getAudio(data){
+		socket.broadcast.emit("getAudio", data);
+		console.log("Getting Audio");
+	})	 
+	 
    
 
 
