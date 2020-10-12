@@ -1,14 +1,14 @@
 //This file when ran opens up a page in the browser where user can remotely control Misty
 import './index.css'
-import { withWaveHeader, appendBuffer } from './wave-heard';
+// import { withWaveHeader, appendBuffer } from './wave-heard';
 //imports the socket.io client
 const io = require("socket.io-client"),
 //Creates a client that connects ot server at the specified address
-client = io.connect("http://192.168.1.135:5505");
+client = io.connect("http://192.168.0.14:5507");
 
-var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-var count = 0;
-var startTime;
+// var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+// var count = 0;
+// var startTime;
 
 //The following buttons change the color of Misty when clicked on in the browser
 
@@ -59,6 +59,30 @@ lowerRightArm.onclick =function(){
 
 var streamVideo = document.getElementById("streamVideo");
 
+var buf;
+var context = new AudioContext();
+
+function playByteArray(byteArray){
+  
+  var arrayBuffer = new ArrayBuffer(byteArray.length);
+  var bufferView = new Uint8Array(arrayBuffer);
+  for(var i = 0; i < byteArray.length; i++){
+
+    bufferView[i] = byteArray[i];
+  }
+  context.decodeAudioData(arrayBuffer, function(buffer){
+    buf = buffer;
+    play();
+  });
+}
+
+function play(){
+  var source = context.createBufferSource();
+  source.buffer = buf;
+  source.connect(context.destination);
+
+  source.start(0);
+}
 
 streamVideo.onclick = function(){
   if(document.getElementById("streamVideo").innerText === "Start Video Stream"){
@@ -69,7 +93,7 @@ streamVideo.onclick = function(){
     client.on("getVideo", function streamvid(data){   
       // var img = new Image();
       // img.src = data;
-
+      
       var arrayBufferView = new Uint8Array( data );
       var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
       var urlCreator = window.URL || window.webkitURL;
@@ -81,10 +105,25 @@ streamVideo.onclick = function(){
     })
 
     client.on("getAudio", function getAudio(data){
-      var array = Array.from(data);
-      var arrayBufferView2 = new Uint8Array(array);
-      var blob2 = new Blob( [arrayBufferView2], {type: "audio/wav" })
-      document.getElementById("audioSpot").setAttribute("src",window.URL.createObjectURL(blob2));
+      // var array = Array.from(data);
+      // var arrayBufferView2 = new Uint8Array(array);
+      // var blob2 = new Blob( [arrayBufferView2], {type: "audio/mp3" })
+
+
+      // document.getElementById("audioSpot").setAttribute("src",window.URL.createObjectURL(blob2));
+      // console.log("audiooooo");
+      var audioArray = new Uint8Array(data.buffer);
+      // console.log(String.fromCharCode.apply(null, new Uint8Array(data)))
+      // console.log(typeof audioArray)
+      playByteArray(audioArray.buffer);
+      // console.log("Pleaaseeee Playyyyy");
+      // console.log(data)
+
+      // var data1 = data.split('base64,')[1];
+      // console.log(typeof(data1));
+      // var decodedData = atou(data1);
+      // var snd = Sound("data:audio/wav;base64,", + decodedData);
+      // snd.play()
     })
   }
   else{
@@ -92,7 +131,19 @@ streamVideo.onclick = function(){
     client.emit("requestVideo", {"Bool": "False"})
   }
 }
-
+function atou(b64) {
+  return decodeURIComponent(escape(atob(b64)));
+}
+var Sound = (function () {
+    var df = document.createDocumentFragment();
+    return function Sound(src) {
+        var snd = new Audio(src);
+        df.appendChild(snd); // keep in fragment until finished playing
+        snd.addEventListener('ended', function () {df.removeChild(snd);});
+        snd.play();
+        return snd;
+    }
+}());
 // https://stackoverflow.com/questions/28440262/web-audio-api-for-live-streaming
 class MasterOutput {
   constructor(computeSamplesCallback) {
@@ -222,11 +273,12 @@ class MasterOutput {
         client.on("getAudio", function streamaud(data) {   
 
           while ( masterOutput.sampleIndex <= masterOutput.computeSamplesCount) {
-
+            console.log(typeof(data))
+            console.log(String.fromCharCode.apply(null, new Uint8Array(data)))
             masterOutput.sampleIndex++;
             masterOutput.currentSeconds = (masterOutput.sampleIndex + masterOutput.currentSamplesOffset) / masterOutput.sampleRate;
 
-            masterOutput.channels[0][masterOutput.sampleIndex] =  new Uint8Array( data );
+            masterOutput.channels[0][masterOutput.sampleIndex] =  new Uint8Array(data);
   
             //Copy the right channel from the left channel.
             masterOutput.channels[1][masterOutput.sampleIndex] = masterOutput.channels[0][masterOutput.sampleIndex];

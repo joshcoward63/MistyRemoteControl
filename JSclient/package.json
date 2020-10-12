@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "set PORT=5505 && react-scripts start"
+    "start": "set PORT=5506 && react-scripts start"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "atob": "^2.1.2",
     "react-scripts": "^3.4.3",
     "socket.io-client": "^2.3.0"
   },

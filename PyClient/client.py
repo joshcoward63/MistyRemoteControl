@@ -12,19 +12,20 @@ import av
 from PIL import Image
 import io
 import wavio
-
-
+import ffmpeg
+import sys
+import numpy as np
 
 
 #Creates the client
 sio = socketio.Client()
-robot_ip = '192.168.0.5'
+robot_ip = '192.168.0.9'
 robot = Robot(robot_ip)
 # robot.disable_avstream()
 robot.enable_avstream()
 robot.stream_av()
 
-sio.connect('http://192.168.1.135:5505')
+sio.connect('http://192.168.0.14:5507')
 
 
 @sio.on('color')
@@ -44,29 +45,94 @@ def message2(data):
 def messageStream2(data):
     stream_path = 'rtsp://{}:1936'.format(robot_ip)
     next_container = av.open(stream_path)
-    next_stream = next_container.streams.get(audio=0)[0]
+
+    #ffmpeg trial 
+    # in1 = ffmpeg.input(stream_path)
+    # a1 = in1.audio
+    # v1 = in1.video
+    # joined = ffmpeg.concat(v1,a1).node
+    # v2 = joined[0]
+    # a2 = joined[1]
+
+    # out = ffmpeg.output(v2,a2, 'out.mp4')
+    # out.run_async()
+    # audio = a1.decode_audio
+    # out = io.BytesIO()
+    # audio = decode_audio(stream_path)
+    # sio.emit("getAudio", audio)
+
+
+   
+
+    # next_stream = next_container.streams.get(audio=0)[0]
 
     # next_container = av.open('live_stream.wav', 'r')
     # next_stream = next_container.streams.get(audio=0)[0]
 
-    out = io.BytesIO()
-    output_container = av.open(out, 'w', format='wav')
-    output_stream = output_container.add_stream('pcm_s16le', rate=44100)
+    # out = io.BytesIO()
+    # output_container = av.open(out, 'w', format='wav')
+    # output_stream = output_container.add_stream('pcm_s16le', rate=44100)
 
 
 
-    for frame in next_container.decode(next_stream):
-        frame.pts = None
+    # for frame in next_container.decode(next_stream):
+    #     frame.pts = None
 
-        for packet in output_stream.encode(frame):
-            output_container.mux(packet)
+    #     for packet in output_stream.encode(frame):
+    #         output_container.mux(packet)
+    # sio.emit("getAudio", packet)
 
-        sio.emit("getAudio", out.read())
+    
+# The following can save audio to a playable file
+    # input_stream = next_container.streams.get(audio=0)[0]
+    # output_container = av.open("live_stream.mp3", 'w')
+    # output_stream = output_container.add_stream('mp3')
+    # for frame in next_container.decode(input_stream):
+    #     frame.pts = None
+        
+    #     for packet in output_stream.encode(frame):
+    #         output_container.mux(packet)
+    #     sio.emit("getAudio", "hey")
 
-        # for packet in output_stream.encode(None):
-        #     output_container.mux(packet)   
-        # output_container.close()         
-     
+    #     for packet in output_stream.encode(None):
+    #         output_container.mux(packet)
+    # output_container.close()
+
+
+
+    #This is the main one I've been plaing with.
+    # input_stream = next_container.streams.get(audio=0)[0]
+    # out = io.BytesIO()
+    # output_container = av.open(out, 'w', format='wav')
+    # output_stream = output_container.add_stream('pcm_s16le', rate = 44100)
+    # for frame in next_container.decode(input_stream):
+    #     frame.pts = None
+        
+    #     # for packet in output_stream.encode(frame):
+    #     #     output_container.mux(packet)
+        
+    #     sio.emit("getAudio", frame.format('pcm_s16le'))
+    #     # output_container.close()
+
+    # output_container.close()
+
+
+
+    
+    # This is the runner up for most likely to work.
+
+    # container = av.open(stream_path)
+
+    # input_stream = container.streams.get(audio=0)[0]
+
+
+    # for frame in container.decode(input_stream):
+
+    #     frame.pts = None
+
+    #     frame.to_ndarray() # <-- this needs to be sent to the jsserver->client to play the audio in the browser
+    #     sio.emit('getAudio', frame.to_ndarray().tobytes())
+
 
 @sio.on('requestVideo')
 def messageStream(data):
@@ -104,6 +170,18 @@ def disconnect():
     # print("succcess")
     #sio.wait()
 
-def encode_audio(audio):
-    audio_content = audio.read()
-    return base64.b64decode(audio_content)
+# def encode_audio(audio):
+#     audio_content = audio.read()
+#     return base64.b64decode(audio_content)
+
+def decode_audio(in_filename):
+    try:
+        out = (ffmpeg
+            .input(in_filename)
+            .output('pipe', format='s16le', acodec='pcm_s16le', ac=1, ar='16k')
+            .run_async(pipe_stdout=True)
+        )
+    except ffmpeg.Error as e:
+        print(e.stderr, file=sys.stderr)
+        sys.exit(1)
+    return out
