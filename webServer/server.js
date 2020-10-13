@@ -71,5 +71,10 @@ io.to(socket.id).emit("hey");
 		console.log("Getting Audio");
 	})
 
+	socket.on("moveHead", function moveHead(data){
+		socket.broadcast.emit("moveHead", JSON.stringify(data));
+		console.log(JSON.stringify(data));
+	})
+
 
  }

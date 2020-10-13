@@ -23,6 +23,94 @@ var lowerLeftArm = document.getElementById("lowerLeftArm");
 var raiseRightArm = document.getElementById("raiseRightArm");
 var pointRightArm = document.getElementById("pointRightArm");
 var lowerRightArm = document.getElementById("lowerRightArm");
+
+//head motion
+var lookUp = document.getElementById("lookUp");
+var lookLeft = document.getElementById("lookLeft");
+var lookRight = document.getElementById("lookRight");
+var lookDown = document.getElementById("lookDown");
+var currentPitch = 0;
+var currentYaw = 0
+
+//Checks if pitch value is in between bounds
+function checkPitch(){
+  var bool;
+  if(currentPitch > 26){
+    bool = false;
+    console.log("Maximum pitch reached")
+    
+  }
+  else if(currentPitch < -40){
+    bool = false
+    console.log("Minimum pitch reached.")
+  }
+  else{
+    bool = true;
+  }
+  return bool;
+}
+
+//Checks if yaw value is in between bounds
+function checkYaw(){
+  var bool;
+  if(currentYaw > 70){
+    bool = false;
+    console.log("Maximum yaw reached")
+    
+  }
+  else if(currentYaw < -70){
+    bool = false
+    console.log("Minimum yaw reached.")
+  }
+  else{
+    bool = true;
+  }
+  return bool;
+}
+
+//Head Movements
+//Up arrow
+lookUp.onclick = function(){
+  currentPitch = currentPitch - 5;
+  if(checkPitch()){
+    client.emit("moveHead", {"Pitch": currentPitch, "Roll": 0, "Yaw": currentYaw, "Velocity": 100});
+  }
+  else{
+    currentPitch = currentPitch + 5;
+  }
+}
+//Down arrow
+lookDown.onclick = function(){
+  currentPitch = currentPitch + 5;
+  if(checkPitch()){
+    client.emit("moveHead", {"Pitch": currentPitch, "Roll": 0, "Yaw": currentYaw, "Velocity": 100});
+  }
+  else{
+    currentPitch = currentPitch - 5;
+  }
+}
+//Left arrow
+lookLeft.onclick = function(){
+  currentYaw = currentYaw - 5;
+  if(checkYaw()){
+    client.emit("moveHead", {"Pitch": currentPitch, "Roll": 0, "Yaw": currentYaw, "Velocity": 100});
+  }
+  else{
+    currentYaw = currentYaw + 5;
+  }
+}
+//Right arrow
+lookRight.onclick = function(){
+  currentYaw = currentYaw + 5;
+  if(checkYaw()){
+    client.emit("moveHead", {"Pitch": currentPitch, "Roll": 0, "Yaw": currentYaw, "Velocity": 100});
+  }
+  else{
+    currentYaw = currentYaw - 5;
+  }
+}
+
+
 //Change color to green
 greenButton.onclick = function(){
   client.emit("color",{"red": 0,"green": 255,"blue": 0});
@@ -35,6 +123,8 @@ blueButton.onclick = function(){
 redButton.onclick = function(){
   client.emit("color",{"red": 255,"green": 0,"blue": 0});
 }
+
+
 
 raiseLeftArm.onclick = function(){
   client.emit("arm",{"Arm": "left" , "Position": -90, "Velocity": 100});

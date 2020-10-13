@@ -8,6 +8,10 @@
     color: white;
   }
 
+  /* th, td {
+    border: 1px solid #006;
+  } */
+
   img{
     display: inline-block;
     width: 400px;
@@ -18,7 +22,8 @@
 body {
     background-color: #000;
     text-align: center;
-    padding: 0px;
+    padding: 0;
+    margin: 0;
   }
   #streamVideo{
     border: none;
@@ -61,10 +66,11 @@ body {
     color: white;
     background-color: #65489D;
     display: inline-block;
-    padding: 15px 32px;
+    padding: 15px 15px;
     text-align: center;
     margin: 4px 2px;
-    width: 200px;
+    width: 100px;
+    height: 33;
   } 
   .head:hover{
     background-color: #b38fdb;

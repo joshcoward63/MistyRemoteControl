@@ -27,6 +27,12 @@ robot.stream_av()
 
 sio.connect('http://192.168.0.14:5507')
 
+@sio.on('moveHead')
+def message3(data):
+    global robot
+    y = json.loads(data)
+    robot.move_head(y["Pitch"], y["Roll"], y["Yaw"], y["Velocity"])
+
 
 @sio.on('color')
 def message(data):
@@ -121,17 +127,17 @@ def messageStream2(data):
     
     # This is the runner up for most likely to work.
 
-    # container = av.open(stream_path)
+    container = av.open(stream_path)
 
-    # input_stream = container.streams.get(audio=0)[0]
+    input_stream = container.streams.get(audio=0)[0]
 
 
-    # for frame in container.decode(input_stream):
+    for frame in container.decode(input_stream):
 
-    #     frame.pts = None
+        frame.pts = None
 
-    #     frame.to_ndarray() # <-- this needs to be sent to the jsserver->client to play the audio in the browser
-    #     sio.emit('getAudio', frame.to_ndarray().tobytes())
+        frame.to_ndarray() # <-- this needs to be sent to the jsserver->client to play the audio in the browser
+        sio.emit('getAudio', base64.b64encode(frame.to_ndarray()))
 
 
 @sio.on('requestVideo')

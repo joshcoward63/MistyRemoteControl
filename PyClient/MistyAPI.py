@@ -71,7 +71,7 @@ class Robot:
         assert velocity in range(0,101), " moveArm: Velocity needs to be in range 0 to 100"
         requests.post('http://'+self.ip+'/api/arms',json={"Arm": arm, "Position":position, "Velocity": velocity})
 
-    def move_head(self,roll,pitch,yaw,velocity=75):
+    def move_head(self,pitch,roll,yaw,velocity=75):
         assert -45 <= roll <= 45
         assert -45 <= pitch <= 45
         assert -70 <= yaw <= 70
