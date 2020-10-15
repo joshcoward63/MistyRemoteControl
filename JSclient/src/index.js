@@ -70,17 +70,64 @@ function checkYaw(){
 
 //Head Movements
 //Up arrow
-lookUp.onclick = function(){
-  currentPitch = currentPitch - 5;
+// lookUp.onmousedown = function(){
+//   currentPitch = currentPitch - 5;
+//   if(checkPitch()){
+//     client.emit("moveHead", {"Pitch": currentPitch, "Roll": 0, "Yaw": currentYaw, "Velocity": 100});
+//   }
+//   else{
+//     currentPitch = currentPitch + 5;
+//   }
+// }
+var timeout = null;
+lookUp.addEventListener("mousedown", mouseDownHandler);
+lookUp.addEventListener("mouseup", mouseUpHandler);
+lookUp.onclick = lookUpFunc();
+lookDown.addEventListener("mousedown", mouseDownHandler1);
+lookDown.addEventListener("mouseup", mouseUpHandler);
+lookDown.onclick = lookDownFunc();
+lookLeft.addEventListener("mousedown", mouseDownHandler2);
+lookLeft.addEventListener("mouseup", mouseUpHandler);
+lookLeft = lookLeftFunc();
+lookRight.addEventListener("mousedown", mouseDownHandler3);
+lookRight.addEventListener("mouseup", mouseUpHandler);
+lookRight.onclick = lookRightFunc();
+
+function mouseUpHandler(event) {
+  clearInterval(timeout);
+}
+
+function mouseDownHandler(event) {
+  lookUpFunc();
+  timeout = setInterval(lookUpFunc, 250);
+  
+}
+
+function mouseDownHandler1(event) {
+  lookDownFunc();
+  timeout = setInterval(lookDownFunc, 250);
+  
+}function mouseDownHandler2(event) {
+  lookLeftFunc();
+  timeout = setInterval(lookLeftFunc, 250);
+  
+}function mouseDownHandler3(event) {
+  lookRightFunc();
+  timeout = setInterval(lookRightFunc, 250);
+  
+}
+
+function lookUpFunc() {
+  currentPitch = currentPitch - 1;
   if(checkPitch()){
     client.emit("moveHead", {"Pitch": currentPitch, "Roll": 0, "Yaw": currentYaw, "Velocity": 100});
   }
   else{
-    currentPitch = currentPitch + 5;
+    currentPitch = currentPitch + 1;
   }
 }
-//Down arrow
-lookDown.onclick = function(){
+
+function lookDownFunc() {
   currentPitch = currentPitch + 5;
   if(checkPitch()){
     client.emit("moveHead", {"Pitch": currentPitch, "Roll": 0, "Yaw": currentYaw, "Velocity": 100});
@@ -89,8 +136,8 @@ lookDown.onclick = function(){
     currentPitch = currentPitch - 5;
   }
 }
-//Left arrow
-lookLeft.onclick = function(){
+
+function lookRightFunc() {
   currentYaw = currentYaw - 5;
   if(checkYaw()){
     client.emit("moveHead", {"Pitch": currentPitch, "Roll": 0, "Yaw": currentYaw, "Velocity": 100});
@@ -99,8 +146,8 @@ lookLeft.onclick = function(){
     currentYaw = currentYaw + 5;
   }
 }
-//Right arrow
-lookRight.onclick = function(){
+
+function lookLeftFunc() {
   currentYaw = currentYaw + 5;
   if(checkYaw()){
     client.emit("moveHead", {"Pitch": currentPitch, "Roll": 0, "Yaw": currentYaw, "Velocity": 100});
@@ -177,8 +224,8 @@ function play(){
 streamVideo.onclick = function(){
   if(document.getElementById("streamVideo").innerText === "Start Video Stream"){
     document.getElementById("streamVideo").innerText = "Stop Video Stream";
-    // client.emit("requestVideo", {"Bool": "True"});
-    client.emit("requestAudio");
+    client.emit("requestVideo", {"Bool": "True"});
+    // client.emit("requestAudio");
   
     client.on("getVideo", function streamvid(data){   
       // var img = new Image();
