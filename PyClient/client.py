@@ -24,7 +24,7 @@ robot = Robot(robot_ip)
 # robot.disable_avstream()
 robot.enable_avstream()
 robot.stream_av()
-
+name = "White Misty"
 sio.connect('http://192.168.0.14:5507')
 
 @sio.on('moveHead')
@@ -89,20 +89,20 @@ def messageStream2(data):
     # sio.emit("getAudio", packet)
 
     
-# The following can save audio to a playable file
-    # input_stream = next_container.streams.get(audio=0)[0]
-    # output_container = av.open("live_stream.mp3", 'w')
-    # output_stream = output_container.add_stream('mp3')
-    # for frame in next_container.decode(input_stream):
-    #     frame.pts = None
+# # The following can save audio to a playable file
+    input_stream = next_container.streams.get(audio=0)[0]
+    output_container = av.open("live_stream.mp3", 'w')
+    output_stream = output_container.add_stream('mp3')
+    for frame in next_container.decode(input_stream):
+        frame.pts = None
         
-    #     for packet in output_stream.encode(frame):
-    #         output_container.mux(packet)
-    #     sio.emit("getAudio", "hey")
+        for packet in output_stream.encode(frame):
+            output_container.mux(packet)
+        sio.emit("getAudio", output_stream)
 
-    #     for packet in output_stream.encode(None):
-    #         output_container.mux(packet)
-    # output_container.close()
+        # for packet in output_stream.encode(None):
+        #     output_container.mux(packet)
+    output_container.close()
 
 
 
@@ -114,30 +114,23 @@ def messageStream2(data):
     # for frame in next_container.decode(input_stream):
     #     frame.pts = None
         
-    #     # for packet in output_stream.encode(frame):
-    #     #     output_container.mux(packet)
+    #     for packet in output_stream.encode(frame):
+    #         output_container.mux(packet)
         
-    #     sio.emit("getAudio", frame.format('pcm_s16le'))
+    #     sio.emit("getAudio", out.getvalue())
     #     # output_container.close()
 
     # output_container.close()
-
-
-
     
     # This is the runner up for most likely to work.
+    # container = av.open(stream_path)
+    # input_stream = container.streams.get(audio=0)[0]
+    # for frame in container.decode(input_stream):
 
-    container = av.open(stream_path)
+    #     frame.pts = None
 
-    input_stream = container.streams.get(audio=0)[0]
-
-
-    for frame in container.decode(input_stream):
-
-        frame.pts = None
-
-        frame.to_ndarray() # <-- this needs to be sent to the jsserver->client to play the audio in the browser
-        sio.emit('getAudio', base64.b64encode(frame.to_ndarray()))
+    #     frame.to_ndarray() # <-- this needs to be sent to the jsserver->client to play the audio in the browser
+    #     sio.emit('getAudio', base64.b64encode(frame.to_ndarray()))
 
 
 @sio.on('requestVideo')
@@ -155,6 +148,12 @@ def messageStream(data):
         imgByteArr = imgByteArr.getvalue()
         sio.emit("getVideo", imgByteArr)
 
+
+@sio.on("hey")
+def message4(sid):
+    info = {"SID": sid, "Name": name, "IP": robot_ip}
+    print(info)
+    sio.emit("getInfo", info)
 # When the socket connects    
 @sio.event
 def connect():
@@ -170,11 +169,12 @@ def connect_error():
 @sio.event
 def disconnect():
     print("I'm disconnected!")
+    
 
 # if __name__=="__main__":
     
-    # print("succcess")
-    #sio.wait()
+#     print("succcess")
+#     sio.wait()
 
 # def encode_audio(audio):
 #     audio_content = audio.read()

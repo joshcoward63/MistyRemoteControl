@@ -6,20 +6,24 @@
     <script src="https://localhost:5500/socket.io/2.3.0/socket.io.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <title>Socket Chat</title>
+    <title>Robot Remote Control Center</title>
      <div class ="title"><Text id="main-heading" type="secondary">Misty Remote Control Center</Text>
+        
+    </div>
+    <div style="position: relative;" >
+        <form style = "margin-right: 95%;" >
+            <select id = "mySelection">
+                <option>Select Robot</option>
+            </select>
+        </form>
     </div>
 </head>
 
 <body>
    
-    <h1>Choose Misty's LED color</h1>
+    
     <script>src ="src\index.js"</script>
-    
-    <button id = "greenButton" class="button button1">Green</button>
-    <button id ="blueButton" class="button button2">Blue</button>
-    <button id = "redButton" class="button button3">Red</button>
-    
+
     <!-- The Following section contains the head arrow buttons -->
     <div>
         <table style ="display: inline-block; border-collapse: collapse;" id = head-table>
@@ -76,14 +80,22 @@
                 <img id =videoSpot src="https://via.placeholder.com/350?text=No+Video+Found" class= "pic"></img>                
             </div>
             <div class = "mid2">
-                <audio controls> <source src="" id = "audioSpot"></audio>
+                <audio controls> <source src="" id = "audioSpot" preload="all"></audio>
             </div>
             <div class = "mid3">
                 <button id = "streamVideo">Start Video Stream</button>
             </div>
             <div lass = "mid3">
                 <button id = "streamAudio">Start Audio Stream</button>
-            </div>            
+            </div>     
+
+            <div>
+        </div>       
+        <div> 
+            <button id = "greenButton" class="button button1">Green</button>
+            <button id ="blueButton" class="button button2">Blue</button>
+            <button id = "redButton" class="button button3">Red</button>
+        </div>
         </div>
         <div class="pageBarRight">
         <div class="pageRightTop">
@@ -98,9 +110,9 @@
         </div>
         <div class = "pageBottom">             
         </div>
+
     </div>
 
-    
     
     
     <div id = "root"></div>

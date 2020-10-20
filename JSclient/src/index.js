@@ -9,16 +9,62 @@ client = io.connect("http://192.168.0.14:5507");
 // var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 // var count = 0;
 // var startTime;
+var robots = {}
+var robots2 = {}
+var robotSelect = document.getElementById("mySelection");
+var robotCount = 0;
+client.on("getInfo", function(info){
+  var newInfo = JSON.parse(info);
+  var sid = newInfo.SID;
+  
+  robots[sid] = newInfo;
+  robots2[robotCount] = {"Name": newInfo["Name"], "SID": sid};
+  robotCount++;
+  var newOption = document.createElement("option");
+  newOption.text = newInfo["Name"];
+  robotSelect.options.add(newOption,1);
+  
+})
+
+client.on("robotDisconnect", function(info){
+    for (var i=0; i<robotSelect.length; i++) {
+      if (robotSelect.options[i].text == robots[info].Name)
+          robotSelect.remove(i);
+  }
+  delete robots[info];
+})
+
+console.log("hey");
+//Changes the current robot
+var currentRobot; 
+var currentRobotSID;
+robotSelect.onchange = function(){
+  currentRobot = robotSelect.options[robotSelect.selectedIndex].text;
+  console.log(currentRobot);
+  console.log(Object.keys(robots2).length)
+  for(var i = 0; i< Object.keys(robots2).length; i++){
+    if(robots2[i].Name == currentRobot){
+      currentRobotSID = robots2[i].SID;
+      client.emit("selectedRobot",currentRobotSID);  
+      return;
+    }     
+  }
+  client.emit("selectedRobot",null);        
+
+}
+
+
 
 //The following buttons change the color of Misty when clicked on in the browser
-
 var greenButton = document.getElementById("greenButton");
 var blueButton = document.getElementById("blueButton");
 var redButton = document.getElementById("redButton");
+
 //left arm motion
 var raiseLeftArm = document.getElementById("raiseLeftArm");
 var pointLeftArm = document.getElementById("pointLeftArm");
 var lowerLeftArm = document.getElementById("lowerLeftArm");
+
 //right arm motion
 var raiseRightArm = document.getElementById("raiseRightArm");
 var pointRightArm = document.getElementById("pointRightArm");
@@ -68,17 +114,7 @@ function checkYaw(){
   return bool;
 }
 
-//Head Movements
-//Up arrow
-// lookUp.onmousedown = function(){
-//   currentPitch = currentPitch - 5;
-//   if(checkPitch()){
-//     client.emit("moveHead", {"Pitch": currentPitch, "Roll": 0, "Yaw": currentYaw, "Velocity": 100});
-//   }
-//   else{
-//     currentPitch = currentPitch + 5;
-//   }
-// }
+
 var timeout = null;
 lookUp.addEventListener("mousedown", mouseDownHandler);
 lookUp.addEventListener("mouseup", mouseUpHandler);
@@ -96,13 +132,10 @@ lookRight.onclick = lookRightFunc();
 function mouseUpHandler(event) {
   clearInterval(timeout);
 }
-
 function mouseDownHandler(event) {
   lookUpFunc();
-  timeout = setInterval(lookUpFunc, 250);
-  
+  timeout = setInterval(lookUpFunc, 250);  
 }
-
 function mouseDownHandler1(event) {
   lookDownFunc();
   timeout = setInterval(lookDownFunc, 250);
@@ -113,9 +146,9 @@ function mouseDownHandler1(event) {
   
 }function mouseDownHandler3(event) {
   lookRightFunc();
-  timeout = setInterval(lookRightFunc, 250);
-  
+  timeout = setInterval(lookRightFunc, 250);  
 }
+
 
 function lookUpFunc() {
   currentPitch = currentPitch - 1;
@@ -224,8 +257,8 @@ function play(){
 streamVideo.onclick = function(){
   if(document.getElementById("streamVideo").innerText === "Start Video Stream"){
     document.getElementById("streamVideo").innerText = "Stop Video Stream";
-    client.emit("requestVideo", {"Bool": "True"});
-    // client.emit("requestAudio");
+    // client.emit("requestVideo", {"Bool": "True"});
+    client.emit("requestAudio");
   
     client.on("getVideo", function streamvid(data){   
       // var img = new Image();
@@ -245,14 +278,17 @@ streamVideo.onclick = function(){
       // var array = Array.from(data);
       // var arrayBufferView2 = new Uint8Array(array);
       // var blob2 = new Blob( [arrayBufferView2], {type: "audio/mp3" })
-
+      var audioSpot = document.getElementById("audioSpot");
+      audioSpot.setAttribute("src", data)
+      
+      audioSpot.play()
 
       // document.getElementById("audioSpot").setAttribute("src",window.URL.createObjectURL(blob2));
       // console.log("audiooooo");
-      var audioArray = new Uint8Array(data.buffer);
+      // var audioArray = new Uint8Array(data.buffer);
       // console.log(String.fromCharCode.apply(null, new Uint8Array(data)))
       // console.log(typeof audioArray)
-      playByteArray(audioArray.buffer);
+      // playByteArray(audioArray.buffer);
       // console.log("Pleaaseeee Playyyyy");
       // console.log(data)
 
