@@ -35,7 +35,6 @@ io.sockets.on('connection', newConnection);
 		socket.broadcast.emit("robotDisconnect", socket.id);
 		delete clients[socket.id];	
 		console.log("Client list: ", clients);
-
 	})
 	socket.on("selectedRobot", function(SID){
 		currentRobotSID = SID;

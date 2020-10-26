@@ -226,7 +226,6 @@ lowerRightArm.onclick =function(){
   client.emit("arm", {"Arm":"right", "Position": 90, "Velocity": 100});
 }
 
-
 var streamVideo = document.getElementById("streamVideo");
 
 var buf;
@@ -454,9 +453,7 @@ class MasterOutput {
             masterOutput.channels[0][masterOutput.sampleIndex] =  new Uint8Array(data);
   
             //Copy the right channel from the left channel.
-            masterOutput.channels[1][masterOutput.sampleIndex] = masterOutput.channels[0][masterOutput.sampleIndex];
-
-   
+            masterOutput.channels[1][masterOutput.sampleIndex] = masterOutput.channels[0][masterOutput.sampleIndex];   
            }
         });
       

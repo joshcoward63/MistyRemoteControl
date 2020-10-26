@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<HTML>
+<head>
+    <title>javascript test</title>
+    <script src="https://localhost:5500/socket.io/2.3.0/socket.io.js"></script>
+    
+
+</head>
+<body>
+    <p id="mainBody">Hellllloooo</p>
+    <canvas id="canvas"></canvas>
+</body>
+<script type="text/javascript" src="jsmpeg.min.js"></script>
+<script type="text/javascript">
+    player = new JSMpeg.Player('ws://localhost:9999', {
+      canvas: document.getElementById('canvas') // Canvas should be a canvas DOM element
+    })	
+</script>
+</HTML>
