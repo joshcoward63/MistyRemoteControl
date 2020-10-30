@@ -3,16 +3,16 @@ import socketio
 import requests
 import json
 import threading
+from threading import Thread
 import time
 from PIL import Image
 from MistyAPI import Robot
 from io import BytesIO
 import base64
 import av
-from PIL import Image
+import os
 import io
 import wavio
-import ffmpeg
 import sys
 import numpy as np
 import jsonpickle
@@ -20,8 +20,13 @@ import sounddevice as sd
 import pygame 
 from time import sleep
 from playsound import playsound
+import wave
+from os import path
 from pydub import AudioSegment
-from pydub.playback import play
+import ffmpeg
+import subprocess
+# from pydub.playback import play
+import pyaudio
 #Creates the client
 sio = socketio.Client()
 robot_ip = '192.168.0.9'
@@ -30,7 +35,7 @@ robot = Robot(robot_ip)
 robot.enable_avstream()
 robot.stream_av()
 name = "White Misty"
-sio.connect('http://192.168.0.14:5507')
+sio.connect('http://192.168.0.8:5000')
 count = 0
 
 @sio.on('moveHead')
@@ -54,15 +59,30 @@ def message2(data):
 
 
 @sio.on('requestAudio')
-def messageStream2(data):
+def messageStream2():
     stream_path = 'rtsp://{}:1936'.format(robot_ip)
     next_container = av.open(stream_path)
-    global count
-    count+1
-    if count == 2:
-        robot.disable_avstream()
-        count = 0
-        
+    # global count
+    # count+1
+    # if count == 2:
+    #     robot.disable_avstream()
+    #     count = 0
+    # def func1():
+    subprocess.call(['ffplay', '-i', next_container, '-vn'])
+
+        # return audioData
+    
+    # def func2():
+    #     time.sleep(1)
+    #     print("before")   
+    #     sio.emit("getAudio", bytes(func1()))
+    #     print("after")
+    
+    # Thread(target=func1).start()
+    # Thread(target=func2).start()
+    # wf = wave.open("D:\\Downloads\\PinkPanther30.wav", 'rb')
+    # sio.emit("getAudio", bytes(next_container))
+
     #ffmpeg trial 
     # in1 = ffmpeg.input(stream_path)
     # a1 = in1.audio
@@ -100,18 +120,48 @@ def messageStream2(data):
     # sio.emit("getAudio", packet)
 
     
-# # The following can save audio to a playable file
+# The following can save audio to a playable file
+    
+    CHUNK = 1026
+    input_stream = next_container.streams.get(audio=0)[0]
+    output_container = av.open("live_stream.mp3", 'w')
+    output_stream = output_container.add_stream('mp3')   
+
+    for frame in next_container.decode(input_stream):
+        frame.pts = None
+        
+        for packet in output_stream.encode(frame):
+            output_container.mux(packet)
+            # time.sleep(30)
+            # dst = "test.wav"
+            # print("test1")
+            # sound  = AudioSegment.from_mp3("live_stream.mp3")
+            # sound.export(dst, format="wav")
+            # wf = wave.open(dst, 'rb')
+            # print("test1.5")
+            # p = pyaudio.PyAudio()
+            # stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
+            #     channels=wf.getnchannels(),
+            #     rate=wf.getframerate(),
+            #     output=True)
+            # print("test2")
+            # data = wf.readframes(CHUNK)
+            # while data != '':
+            #     stream.write(data)
+            #     data = wf.readframes(CHUNK)
+        # for packet in output_stream.encode(None):
+        #     output_container.mux(packet)
+    output_container.close()
+
+# The following can save audio to a playable file
     # input_stream = next_container.streams.get(audio=0)[0]
     # output_container = av.open("live_stream.mp3", 'w')
     # output_stream = output_container.add_stream('mp3')
-    # pygame.mixer.init()
     # for frame in next_container.decode(input_stream):
     #     frame.pts = None
         
     #     for packet in output_stream.encode(frame):
     #         output_container.mux(packet)
-    #         music = AudioSegment.from_file("live_stream.mp3")
-    #         play(music)
     #     # for packet in output_stream.encode(None):
     #     #     output_container.mux(packet)
     # output_container.close()
@@ -135,20 +185,31 @@ def messageStream2(data):
     # output_container.close()
     
     # This is the runner up for most likely to work.
-    container = av.open(stream_path)
-    input_stream = container.streams.get(audio=0)[0]
-    pygame.mixer.pre_init(44100, size=-16, channels=1)
-    pygame.mixer.init()
-    print("ghe")
-    for frame in container.decode(input_stream):
+#     p = pyaudio.PyAudio()
+#     stream = p.open(format=,
+#                          channels=1,
+#                          rate=44100,
+#                          output=True,
+#                          )
+# Assuming you have a numpy array called samples
+# data = samples.astype(np.float32).tostring()
+# stream.write(data)
+    # container = av.open(stream_path)
+    # input_stream = container.streams.get(audio=0)[0]
+    # pygame.mixer.pre_init(44100, size=-16, channels=1)
+    # pygame.mixer.init()
+    # print("ghe")
+    # for frame in container.decode(input_stream):
 
-        frame.pts = None
-        print(frame.to_ndarray())
-        sound =pygame.sndarray.make_sound(frame.to_ndarray().ravel()) # <-- this needs to be sent to the jsserver->client to play the audio in the browser
+    #     frame.pts = None
+    #     # print(frame.to_ndarray())
+    #     print("beg")
+    #     print(frame.to_ndarray())# <-- this needs to be sent to the jsserver->client to play the audio in the browser
+    #     print("end")
         # sio.emit('getAudio', base64.b64encode(frame.to_ndarray()))
-        print("made it")
-        sound.play()
-        sleep(0.01)
+        # print("made it")
+        # sound.play()
+        # sleep(0.01)
 
 @sio.on('requestVideo')
 def messageStream(data):

@@ -256,22 +256,35 @@ function play(){
 streamVideo.onclick = function(){
   if(document.getElementById("streamVideo").innerText === "Start Video Stream"){
     document.getElementById("streamVideo").innerText = "Stop Video Stream";
-    // client.emit("requestVideo", {"Bool": "True"});
-    client.emit("requestAudio");
+    client.emit("requestVideo", {"Bool": "True"});
+    // client.emit("requestAudio");
   
-    client.on("getVideo", function streamvid(data){   
-      // var img = new Image();
-      // img.src = data;
+    // client.on("getVideo", function streamvid(data){   
+    //   // var img = new Image();
+    //   // img.src = data;
       
-      var arrayBufferView = new Uint8Array( data );
-      var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
-      var urlCreator = window.URL || window.webkitURL;
-      var imageUrl = urlCreator.createObjectURL( blob );
+    //   var arrayBufferView = new Uint8Array( data );
+    //   var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
+    //   var urlCreator = window.URL || window.webkitURL;
+    //   var imageUrl = urlCreator.createObjectURL( blob );
     
 
-      document.getElementById("videoSpot").setAttribute("src", imageUrl);
+    //   document.getElementById("videoSpot").setAttribute("src", imageUrl);
      
-    })
+    // })
+      client.socket.on('getVideo', function(data) {
+      try {
+        var canvas = document.getElementById('videoSpot');
+        var context = canvas.getContext('2d');
+        var imageObj = new Image();
+        imageObj.src = "data:image/jpeg;base64,"+data;
+        imageObj.onload = function(){
+          context.height = imageObj.height;
+          context.width = imageObj.width;
+          context.drawImage(imageObj,0,0,context.width,context.height);
+        }
+      } catch(e){ }
+    });
 
     client.on("getAudio", function getAudio(data){
       // var array = Array.from(data);

@@ -6,6 +6,17 @@ var robot_ip = "192.168.0.9";
 var name = "White Misty";
 const io = require("socket.io-client"),
 client = io.connect("http://192.168.0.14:5507");
+var ffmpeg = require('child_process').spawn("ffmpeg", [
+    "-re",
+    "-y",
+    "-i",
+    "rtsp://"+robot_ip+":1936",
+    "-preset",
+    "ultrafast",
+    "-f",
+    "mjpeg",
+    "pipe:1"
+  ]);
 export class Robot {
     constructor(ip) {
         this.ip = ip;
@@ -73,13 +84,8 @@ client.on("hey", function(SID){
     console.log(info);
 })
 
-const Stream = require('node-rtsp-stream')
-stream = new Stream({
-  name: 'name',
-  streamUrl: 'rtsp://192.168.0.9:1936',
-  wsPort: 9999,
-  ffmpegOptions: { // options ffmpeg flags
-    '-stats': '', // an option with no neccessary value uses a blank string
-    '-r': 30 // options with required values specify the value after the key
-  }
-})
+
+ffmpeg.stdout.on('requestVideo', function (data) {
+    var frame = new Buffer(data).toString('base64');
+    client.emit('getVideo',frame);
+  });
