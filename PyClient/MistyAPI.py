@@ -1,6 +1,7 @@
 import requests
 import json
 import threading
+import random
 import time
 
 class Robot:
@@ -29,10 +30,10 @@ class Robot:
                 if self.trying_to_align:
                     time.sleep(3.0)
                     continue
-                d = choice([30,40,-30,-40])
-                t = choice([100,200,250])
+                d = random.choice([30,40,-30,-40])
+                t = random.choice([100,200,250])
                 self.drive_time(d,d,t)
-                w = choice([1,2,3,4])
+                w = random.choice([1,2,3,4])
                 time.sleep(w)
 
         t = threading.Thread(target=inner)
