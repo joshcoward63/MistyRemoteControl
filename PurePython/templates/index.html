@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>    
     <script src="https://localhost:5500/socket.io/2.3.0/socket.io.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link rel="stylesheet" href="{{ url_for('static',filename='index.css')}}">
     <title>Robot Remote Control Center</title>
      <div class ="title"><Text id="main-heading" type="secondary">Misty Remote Control Center</Text>
         
@@ -80,12 +81,13 @@
                 <img id =videoSpot src="https://via.placeholder.com/350?text=No+Video+Found" class= "pic"></img>                
             </div>
             <div class = "mid2">
-                <audio controls> <source src="" id = "audioSpot" preload="all"></audio>
+                <audio controls> <source src="C:\Users\Josh\Downloads\sample1.mp3" id = "audioSpot" preload="all"> 
+                  </audio>
             </div>
             <div class = "mid3">
                 <button id = "streamVideo">Start Video Stream</button>
             </div>
-            <div lass = "mid3">
+            <div class = "mid3">
                 <button id = "streamAudio">Start Audio Stream</button>
             </div>     
 
@@ -117,4 +119,18 @@
     
     <div id = "root"></div>
 </body>
+
+<script>
+    $('#streamAudio').click(function() {
+        $.ajax({
+              type:'POST',
+              url: "{{ url_for('foo')}}",
+              dataType:"text",
+              success: function(response){
+                 console.log(response);
+                 alert(response);
+              }
+      });
+    });
+  </script>
 </html>
