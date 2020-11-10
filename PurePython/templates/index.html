@@ -7,7 +7,7 @@
     <script src="https://localhost:5500/socket.io/2.3.0/socket.io.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ url_for('static',filename='index.css')}}">
-    <title>Robot Remote Control Center</title>
+    <script type="text/javascript" src="{{url_for('static', filename='index.js')}}"></script>    <title>Robot Remote Control Center</title>
      <div class ="title"><Text id="main-heading" type="secondary">Misty Remote Control Center</Text>
         
     </div>
@@ -124,7 +124,7 @@
     $('#streamAudio').click(function() {
         $.ajax({
               type:'POST',
-              url: "{{ url_for('foo')}}",
+              url: "{{ url_for('requestAudio')}}",
               dataType:"text",
               success: function(response){
                  console.log(response);
@@ -133,4 +133,5 @@
       });
     });
   </script>
-</html>
+
+</html

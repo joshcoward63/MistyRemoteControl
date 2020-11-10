@@ -68,8 +68,9 @@ def messageStream2():
     #     robot.disable_avstream()
     #     count = 0
     # def func1():
-    subprocess.call(['ffplay', '-i', next_container, '-vn'])
-
+    sio.emit("getAudio")
+    subprocess.call(['ffmpeg', '-re', '-stream_loop', '-1','-vn', '-i' , "test.mp4", '-c', 'copy', '-f', 'rtsp', '-sdp_file', 'video.sdp', 'rtsp://192.168.0.8:8554/mystream' ])
+    
         # return audioData
     
     # def func2():

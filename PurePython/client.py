@@ -15,6 +15,7 @@ import sys
 import numpy as np
 import sounddevice as sd
 
+
 #Creates the client
 sio = socketio.Client()
 robot_ip = '192.168.0.9'
@@ -23,7 +24,7 @@ robot = Robot(robot_ip)
 robot.enable_avstream()
 robot.stream_av()
 name = "White Misty"
-sio.connect('http://192.168.0.5:5000')
+sio.connect('http://192.168.0.8:5000')
 
 @sio.on('moveHead')
 def message3(data):
@@ -49,7 +50,19 @@ def message2(data):
 def messageStream2():
     stream_path = 'rtsp://{}:1936'.format(robot_ip)
     next_container = av.open(stream_path)
-
+    input_stream = next_container.streams.get(audio=0)[0]
+    for frame in next_container.decode(input_stream):
+        frame.pts = None
+        x = frame.to_ndarray().astype(np.float32).tostring()
+        # print(x.hex())
+        # print("end of data")
+        # try: 
+        #     user_integer = input("Press q to quit") 
+        #     if user_integer is 'q':
+        #         exit()
+        # except:
+        #     pass 
+        sio.emit('getAudio', x)
     #ffmpeg trial 
     # in1 = ffmpeg.input(stream_path)
     # a1 = in1.audio
@@ -121,19 +134,19 @@ def messageStream2():
     # output_container.close()
     
     # This is the runner up for most likely to work.
-    print("hello")
-    container = av.open(stream_path)
-    input_stream = container.streams.get(audio=0)[0]
-    for frame in container.decode(input_stream):
+    # print("hello")
+    # container = av.open(stream_path)
+    # input_stream = container.streams.get(audio=0)[0]
+    # for frame in container.decode(input_stream):
 
-        frame.pts = None
-        print("hey")
-        sd.play(frame.to_ndarray()) # <-- this needs to be sent to the jsserver->client to play the audio in the browser
-        # sio.emit('getAudio', base64.b64encode(frame.to_ndarray()))
-        print("hoe")
+    #     frame.pts = None
+    #     print("hey")
+    #     sd.play(frame.to_ndarray()) # <-- this needs to be sent to the jsserver->client to play the audio in the browser
+    #     # sio.emit('getAudio', base64.b64encode(frame.to_ndarray()))
+    #     print("hoe")
 
 @sio.on('requestVideo')
-def messageStream(data):
+def messageStream():
     global robot
 
     stream_path = 'rtsp://{}:1936'.format(robot_ip)

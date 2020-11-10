@@ -1,36 +1,32 @@
 import eventlet
 import socketio
+import pyaudio
+
 sio = socketio.Server()
 app = socketio.WSGIApp(sio, static_files={
     '/': {'content_type': 'text/html', 'filename': 'index.html'}
 })
+
+p = pyaudio.PyAudio()
+
+stream = p.open(format=pyaudio.paFloat32,
+                channels=1,
+                rate=44100,
+                output=True)
+
 @sio.event
 def connect(sid, environ):
     print('connect ', sid)
-@sio.event
+
+@sio.on('audio')
 def my_message(sid, data):
-    print('message ', data)
-    
+    global stream
+    print('receiving')
+    stream.write(data)
+
 @sio.event
 def disconnect(sid):
     print('disconnect ', sid)
-
-@sio.on("getAudio")
-def getAudio(sid, data):
-    sio.emit("getAudio", data)
-
-@sio.on("getVideo")
-def getVideo(sid, data):
-    sio.emit("getVideo", data)
-
-
-@sio.on("requestAudio")
-def requestAudio(data):
-    sio.emit("requestAudio")    
-
-@sio.on("requestVideo")
-def requestAudio(data):
-    sio.emit("requestVideo")  
 
 if __name__ == '__main__':
     eventlet.wsgi.server(eventlet.listen(('', 5000)), app)

@@ -1,11 +1,11 @@
 //This file when ran opens up a page in the browser where user can remotely control Misty
-import './index.css'
 // import { withWaveHeader, appendBuffer } from './wave-heard';
 //imports the socket.io client
 const io = require("socket.io-client"),
 //Creates a client that connects ot server at the specified address
-client = io.connect("http://192.168.0.14:5507");
-
+client = io.connect("http://192.168.0.8:5000");
+alert("found file");
+console.log("found file");
 // var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 // var count = 0;
 // var startTime;
@@ -287,30 +287,8 @@ streamVideo.onclick = function(){
     // });
 
     client.on("getAudio", function getAudio(data){
-      // var array = Array.from(data);
-      // var arrayBufferView2 = new Uint8Array(array);
-      // var blob2 = new Blob( [arrayBufferView2], {type: "audio/mp3" })
-      var bytes = []
-      
-      var audioSpot = document.getElementById("audioSpot");
-      audioSpot.setAttribute("src", data)
-      
-      audioSpot.play()
-
-      // document.getElementById("audioSpot").setAttribute("src",window.URL.createObjectURL(blob2));
-      // console.log("audiooooo");
-      // var audioArray = new Uint8Array(data.buffer);
-      // console.log(String.fromCharCode.apply(null, new Uint8Array(data)))
-      // console.log(typeof audioArray)
-      // playByteArray(audioArray.buffer);
-      // console.log("Pleaaseeee Playyyyy");
-      // console.log(data)
-
-      // var data1 = data.split('base64,')[1];
-      // console.log(typeof(data1));
-      // var decodedData = atou(data1);
-      // var snd = Sound("data:audio/wav;base64,", + decodedData);
-      // snd.play()
+      const python = spawn('python', ['script1.py']);
+      python.stodout.on('data')
     })
   }
   else{
