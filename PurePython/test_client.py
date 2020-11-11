@@ -1,4 +1,6 @@
 import socketio
+import time
+import threading
 
 sio = socketio.Client()
 
@@ -6,17 +8,14 @@ from MistyAPI import Robot
 import av
 import numpy as np
 
-robot_ip = '192.168.0.9'
+robot_ip = '192.168.1.137'
 robot = Robot(robot_ip)
 # robot.enable_avstream()
 # robot.stream_av()
 
 next_container = None
 
-
-
-@sio.event
-def connect():
+def consumer_thread():
     global next_container
     print("connected, starting stream")
     stream_path = 'rtsp://{}:1936'.format(robot_ip)
@@ -27,6 +26,12 @@ def connect():
         sio.emit('audio', frame.to_ndarray().astype(np.float32).tostring())
 
 @sio.event
+def connect():
+    t = threading.Thread(target=consumer_thread)
+    t.start()  
+
+
+@sio.event
 def my_message(data):
     print('message received with ', data)
 
@@ -35,5 +40,5 @@ def disconnect():
     print('disconnected from server')
 
 
-sio.connect('http://192.168.0.8:5000')
+sio.connect('http://192.168.1.135:5000')
 sio.wait()
