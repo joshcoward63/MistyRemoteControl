@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ url_for('static',filename='index.css')}}">
     <script type="text/javascript" src="{{url_for('static', filename='index.js')}}"></script>    <title>Robot Remote Control Center</title>
-     <div class ="title"><Text id="main-heading" type="secondary">Misty Remote Control Center</Text>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+ 
+    <div class ="title"><Text id="main-heading" type="secondary">Misty Remote Control Center</Text>
         
     </div>
     <div style="position: relative;" >
@@ -21,9 +25,26 @@
 </head>
 
 <body>
-   
-    
-    <script>src ="src\index.js"</script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        
+            var socket = io.connect('http://127.0.0.1:5000');
+        
+            socket.on('connect', function() {
+                socket.send('User has connected!');
+            });
+        
+            socket.on('message', function(data) {
+                console.log("recieving data")
+                var arrayBufferView = new Uint8Array( data );
+                var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
+                var urlCreator = window.URL || window.webkitURL;
+                var imageUrl = urlCreator.createObjectURL( blob );
+                document.getElementById("videoSpot").setAttribute("src", imageUrl);
+            });
+        
+        });
+        </script>
 
     <!-- The Following section contains the head arrow buttons -->
     <div>
@@ -125,6 +146,29 @@
         $.ajax({
               type:'POST',
               url: "{{ url_for('requestAudio')}}",
+              dataType:"text",
+              success: function(response){
+                 console.log(response);
+                 alert(response);
+              }
+      });
+    });
+  </script>
+
+<script>
+    $('#streamVideo').click(function() {
+        $.ajax({
+              type:'POST',
+              url: "{{ url_for('requestVideo')}}",
+              dataType:"text",
+              success: function(response){
+                 console.log(response);
+                 alert(response);
+              }
+      });
+      $.ajax({
+              type:'GET',
+              url: "{{ url_for('requestVideo')}}",
               dataType:"text",
               success: function(response){
                  console.log(response);

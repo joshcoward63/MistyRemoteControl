@@ -1,43 +1,14 @@
 import requests
 import json
 import threading
-import random
 import time
-
-class Robot:
-
-    def __init__(self,ip):
-        self.ip = ip
-
-        self.images_saved = []
-        self.audio_saved  = []
-        self.faces_saved = []
-
-        self.backpack_instance = None
-        self.time_of_flight_instance = [None]*4
-        self.face_recognition_instance = None
-        self.trying_to_align = False
-        self.available_subscriptions = ["SerialMessage", "TimeOfFlight","FaceRecognition","LocomotionCommand","HaltCommand","SelfState","WorldState"]
-        # self.start_small_random_movements()
-        #self.populateImages()
-        #self.populateAudio()
-        #self.populateLearnedFaces()
-
-    def start_small_random_movements(self):
-
-        def inner():
-            while True:
-                if self.trying_to_align:
-                    time.sleep(3.0)
-                    continue
-                d = random.choice([30,40,-30,-40])
-                t = random.choice([100,200,250])
-                self.drive_time(d,d,t)
-                w = random.choice([1,2,3,4])
-                time.sleep(w)
-
-        t = threading.Thread(target=inner)
-        t.start()    
+import websocket
+import numpy as np 
+import random
+try:
+    import thread
+except ImportError:
+    import _thread as thread
 
     def change_LED(self,red,green,blue):
         assert red in range(0,256) and blue in range(0,256) and green in range(0,256), " changeLED: The colors need to be in 0-255 range"
@@ -59,20 +30,26 @@ class Robot:
         resp = requests.get('http://{}/api/cameras/rgb?Base64=true'.format(self.ip))
         resp = resp.json()
         reply = resp['result']
-        # print(reply)
-        return reply
+        print(reply)
 
     def battery(self):
         resp = requests.get('http://{}/api/battery'.format(self.ip))
         resp = resp.json()
         return resp['result']
 
+    def set_volume(self, vol):
+        requests.post('http://'+self.ip+'/api/audio/volume',json={"Volume": vol}) 
+
+    def say(self, text):
+        print("SAYING ", text)
+        requests.post('http://'+self.ip+'/api/tts/speak',json={"Text": '<speak>{}</speak>'.format(text)})       
+
     def move_arm(self,arm,position,velocity=75):
         assert position in range(-91,91), " moveArm: position needs to be -90 to 90"
         assert velocity in range(0,101), " moveArm: Velocity needs to be in range 0 to 100"
         requests.post('http://'+self.ip+'/api/arms',json={"Arm": arm, "Position":position, "Velocity": velocity})
 
-    def move_head(self,pitch,roll,yaw,velocity=75):
+    def move_head(self,roll,pitch,yaw,velocity=75):
         assert -45 <= roll <= 45
         assert -45 <= pitch <= 45
         assert -70 <= yaw <= 70
@@ -185,16 +162,6 @@ class Robot:
     def clear_learned_faces(self):
         requests.delete('http://'+self.ip+'/api/faces')
         self.faces_saved = []
-
-    def enable_avstream(self):
-        print(requests.post('http://'+self.ip+'/api/services/avstreaming/enable'))
-
-    def disable_avstream(self):
-        print(requests.post('http://'+self.ip+'/api/avstreaming/stop'))
-
-    def stream_av(self):
-        print(requests.post('http://'+self.ip+'/api/avstreaming/start',json={"URL": "rtspd:1936", "Width":640, "Height": 480, 'FrameRate':30}))
-
     
     def learn_face(self,name):
         assert isinstance(name, str), " trainFace: name must be a string"
@@ -210,3 +177,14 @@ class Robot:
             time.sleep(1)
         print("Face Trained")
         self.populateLearnedFaces()
+
+    def enable_avstream(self):
+        print(requests.post('http://'+self.ip+'/api/services/avstreaming/enable'))
+
+    def disable_avstream(self):
+        print(requests.post('http://'+self.ip+'/api/avstreaming/stop'))
+
+    def stream_av(self):
+        print(requests.post('http://'+self.ip+'/api/avstreaming/start',json={"URL": "rtspd:1936", "Width":640, "Height": 480, 'FrameRate':30}))
+
+

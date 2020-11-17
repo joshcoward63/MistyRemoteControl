@@ -8,7 +8,7 @@ from MistyAPI import Robot
 import av
 import numpy as np
 
-robot_ip = '192.168.1.137'
+robot_ip = '192.168.0.9'
 robot = Robot(robot_ip)
 # robot.enable_avstream()
 # robot.stream_av()
@@ -40,5 +40,5 @@ def disconnect():
     print('disconnected from server')
 
 
-sio.connect('http://192.168.1.135:5000')
+sio.connect('http://192.168.0.8:5500')
 sio.wait()

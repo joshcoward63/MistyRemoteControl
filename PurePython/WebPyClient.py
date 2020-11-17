@@ -1,4 +1,5 @@
 from flask import Flask, render_template,request, redirect
+from flask_socketio import SocketIO, send
 import socketio
 from playsound import playsound
 import pyaudio
@@ -15,21 +16,44 @@ import threading
 from threading import Thread
 from threading import current_thread
 import random
+import os
+import io
+import PIL.Image as Image
+from array import array
+from flask_session import Session
 
-
-queue = BlockingQueue(5)
+queue = BlockingQueue(1000)
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret!'
+socketioServer = SocketIO(app, cors_allowed_origins='*')
 sio = socketio.Client()
-sio.connect('http://192.168.0.8:5000')
-p = pyaudio.PyAudio()
-stream = p.open(format=pyaudio.paFloat32,
-                channels=1,
-                rate=44100,
-                output=True)
-audioQueue = []
+sio.connect('http://192.168.0.8:5500')
+
+def consumer_thread():
+    global queue
+
+    p = pyaudio.PyAudio()
+
+    stream = p.open(format=pyaudio.paFloat32,
+                    channels=1,
+                    rate=44100,
+                    output=True)
+
+    while True:
+        item = queue.dequeue()
+        try: 
+            stream.write(item, exception_on_underflow=True)
+        except:
+            print("EXCEPTION!")
+            time.sleep(0.001)
+            p = pyaudio.PyAudio()
+            stream = p.open(format=pyaudio.paFloat32,
+                    channels=1,
+                    rate=44100,
+                    output=True)
+            
 @app.route("/")
 def home():
-
     return render_template("index.html")
 
 @app.route('/requestAudio', methods=['POST'])
@@ -60,12 +84,8 @@ def disconnect():
 @sio.on("getAudio")
 def getAudio(data):
     global queue
-    global stream
-    # print(data)
-    consumerThread1 = Thread(target=consumer_thread, name="consumer-1", args=(queue,), daemon=True)
-    producerThread1 = Thread(target=producer_thread, name="producer-1", args=(queue, data), daemon=True)
-    consumerThread1.start()
-    producerThread1.start()
+    print('receiving')
+    queue.enqueue(data)
     # time.sleep(.001)
     # stream.write(queue.dequeue())
 
@@ -75,37 +95,15 @@ def getAudio(data):
 # @sio.on("getVideo")
 # def getVideo(videoData): 
 #     print("Recieving video")
-    
-def consumer_thread(q):
-    global stream
-    noise = np.random.normal(0,1,100)
-    item = q.dequeue()
+#     imag = Image.open(io.BytesIO(videoData))
+#     imag.show()
 
-    if queue.isEmpty() and item is None:
-        stream.write(noise)
-        print("playing whitenoise")
-
-    else:
-        try:
-            stream.write(item)
-            print("playing audio")
-        except:
-            print("error")
-            p = pyaudio.PyAudio()
-            stream = p.open(format=pyaudio.paFloat32,
-                    channels=1,
-                    rate=44100,
-                    output=True)
-            stream.write(item)
-            print("playing audio")
-
-def producer_thread(q, val):
-    item = val        
-    q.enqueue(item)
-
+@socketioServer.on('message')
+def handleMessage(msg):
+	print('Message: ' + msg)
+	send(msg, broadcast=True)
 
 if __name__ == '__main__':
-   app.run(host="127.0.0.1", port=8080)
-
-
-
+    t = threading.Thread(target=consumer_thread)
+    t.start()         
+    app.run(host="127.0.0.1", port=8080)

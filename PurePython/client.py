@@ -24,7 +24,7 @@ robot = Robot(robot_ip)
 robot.enable_avstream()
 robot.stream_av()
 name = "White Misty"
-sio.connect('http://192.168.0.8:5000')
+sio.connect('http://192.168.0.8:5500')
 
 @sio.on('moveHead')
 def message3(data):
@@ -45,15 +45,22 @@ def message2(data):
     y = json.loads(data)
     robot.move_arm(y["Arm"], y['Position'], y['Velocity'])
 
+next_container = None
 
-@sio.on('requestAudio')
-def messageStream2():
+def consumer_thread():
+    global next_container
+    print("connected, starting stream")
     stream_path = 'rtsp://{}:1936'.format(robot_ip)
     next_container = av.open(stream_path)
     input_stream = next_container.streams.get(audio=0)[0]
     for frame in next_container.decode(input_stream):
         frame.pts = None
-        x = frame.to_ndarray().astype(np.float32).tostring()
+        sio.emit('getAudio', frame.to_ndarray().astype(np.float32).tostring())
+
+@sio.on('requestAudio')
+def messageStream2():
+    t = threading.Thread(target=consumer_thread)
+    t.start()  
         # print(x.hex())
         # print("end of data")
         # try: 
@@ -62,7 +69,6 @@ def messageStream2():
         #         exit()
         # except:
         #     pass 
-        sio.emit('getAudio', x)
     #ffmpeg trial 
     # in1 = ffmpeg.input(stream_path)
     # a1 = in1.audio

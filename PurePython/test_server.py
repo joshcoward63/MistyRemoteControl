@@ -33,6 +33,7 @@ def consumer_thread():
         item = queue.dequeue()
         try: 
             stream.write(item, exception_on_underflow=True)
+            print("hey")
         except:
             print("EXCEPTION!")
             time.sleep(0.1)
@@ -64,7 +65,7 @@ def connect(sid, environ):
 @sio.on('audio')
 def my_message(sid, data):
     global queue
-    # print('receiving')
+    print('receiving')
     queue.enqueue(data)
 
 @sio.event
@@ -74,8 +75,9 @@ def disconnect(sid):
 if __name__ == '__main__':
     t = threading.Thread(target=consumer_thread)
     t.start()  
+    
     # t = threading.Thread(target=add_silence)
     # t.start()      
-    eventlet.wsgi.server(eventlet.listen(('', 5000)), app)
+    eventlet.wsgi.server(eventlet.listen(('', 5500)), app)
     
  
