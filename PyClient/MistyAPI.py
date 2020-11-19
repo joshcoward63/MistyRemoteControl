@@ -9,6 +9,20 @@ try:
     import thread
 except ImportError:
     import _thread as thread
+class Robot:
+    def __init__(self,ip):
+        self.ip = ip
+
+        self.images_saved = []
+        self.audio_saved  = []
+        self.faces_saved = []
+
+        self.backpack_instance = None
+        self.time_of_flight_instance = [None]*4
+        self.face_recognition_instance = None
+        self.trying_to_align = False
+        self.set_volume(7.0)
+        self.available_subscriptions = ["SerialMessage", "TimeOfFlight","FaceRecognition","LocomotionCommand","HaltCommand","SelfState","WorldState"]
 
     def change_LED(self,red,green,blue):
         assert red in range(0,256) and blue in range(0,256) and green in range(0,256), " changeLED: The colors need to be in 0-255 range"
