@@ -57,5 +57,6 @@ The IP addresses in the files client.py and index.js will need to be changed to 
 ### Misty's IP address is subject to change from network to network due to other Local Devices. 
 If at first there's no response double check Misty's IP address through the Misty app and make sure that it matches the IP address in client.py
 
-	
+## Known bugs to be fixed
+Once streaming video or audio is initiated it can't be stopped
 	
