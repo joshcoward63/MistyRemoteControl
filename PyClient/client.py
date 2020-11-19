@@ -13,19 +13,23 @@ from PIL import Image
 import io
 import numpy as np
 
+#Loads config file
+with open("./../config.json", 'r') as file:
+    config =  json.load(file)
+
 #Creates the client
 sio = socketio.Client()
 
 #Robot Info
-robot_ip = '192.168.0.9'
+robot_ip = config["robot_ip"]
 robot = Robot(robot_ip)
 # robot.disable_avstream()
 robot.enable_avstream()
 robot.stream_av()
-name = "White Misty"
-
+name = config["robot_name"]
+server_ip = config["server_ip"] + ":" + config["server_port"]
 #Connects to server
-sio.connect('http://192.168.0.8:5000')
+sio.connect(server_ip)
 
 next_container = None
 

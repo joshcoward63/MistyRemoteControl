@@ -1,9 +1,14 @@
 ;/*This file creates a Nodejs server that listens for command from Misty Client and frontend Web Client*/
 var express = require('express');
 var app = express();
+const fs = require('fs');
+let rawdata = fs.readFileSync('./../config.json');
+let config = JSON.parse(rawdata);
+console.log(config);
+var serverPort = config["server_port"];
 
 /*Server is listening on port 5000*/
-var server = app.listen(5000);
+var server = app.listen(serverPort);
 
 app.use(express.static('public'));
 console.log("Listening on port 5000");

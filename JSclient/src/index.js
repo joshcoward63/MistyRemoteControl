@@ -2,8 +2,12 @@
 import './index.css'
 /*imports the socket.io client*/
 const io = require("socket.io-client"),
+const fs = require("fs");
+let rawdata = fs.readFileSync("./../config.json");
+let config = JSON.parse(rawdata);
+serverIp = config["server_ip"] + ":" + config["server_port"];
 /*Creates a client that connects ot server at the specified address*/
-client = io.connect("http://192.168.0.8:5000");
+client = io.connect(serverIp);
 
 var robots = {}
 var robots2 = {}

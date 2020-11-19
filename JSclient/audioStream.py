@@ -5,12 +5,18 @@ import threading
 import time
 import pyaudio
 
+#Loads config file
+with open("./../config.json", 'r') as file:
+    config = json.load(file)
+
+server_ip = config["server_ip"] + ":" + config["server_port"]
+
 queue = BlockingQueue(1000)
 
 sio = socketio.Client()
 
 """Connects to Server"""
-sio.connect('http://192.168.0.8:5000')
+sio.connect(server_ip)
 
 """Plays audio stream"""
 def consumer_thread():
