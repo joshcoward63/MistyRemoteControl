@@ -1,13 +1,13 @@
 /*This file when ran opens up a page in the browser where user can remotely control Misty*/
 import './index.css'
 /*imports the socket.io client*/
-const io = require("socket.io-client"),
+const io = require("socket.io-client");
 const fs = require("fs");
 let rawdata = fs.readFileSync("./../config.json");
 let config = JSON.parse(rawdata);
-serverIp = config["server_ip"] + ":" + config["server_port"];
+let serverIp = config["server_ip"] + ":" + config["server_port"];
 /*Creates a client that connects ot server at the specified address*/
-client = io.connect(serverIp);
+let client = io.connect(serverIp);
 
 var robots = {}
 var robots2 = {}
