@@ -4,6 +4,7 @@ from BlockingQueue import BlockingQueue
 import threading
 import time
 import pyaudio
+import json
 
 #Loads config file
 with open("./../config.json", 'r') as file:
@@ -11,11 +12,13 @@ with open("./../config.json", 'r') as file:
 
 server_ip = config["server_ip"] + ":" + config["server_port"]
 
+
 queue = BlockingQueue(1000)
 
 sio = socketio.Client()
 
 """Connects to Server"""
+print("connecting to", server_ip)
 sio.connect(server_ip)
 
 """Plays audio stream"""
@@ -59,7 +62,7 @@ def disconnect():
 @sio.on("getAudio")
 def getAudio(data):
     global queue
-    print('receiving')
+    # print('receiving')
     queue.enqueue(data)
 
 if __name__ == '__main__':
