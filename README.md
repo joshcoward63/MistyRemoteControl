@@ -38,7 +38,7 @@
 1. Open a terminal
 2. Enter the following commands:
 	```pip install python-socketio==4.4.0 requests base64 av threading Pillow numpy```
-3. If you plan to use multiple robots make sure to change the robot name in the client.py file in order to differentiate between robots.
+3. If you plan to use multiple robots make sure to change the robot name in the config file in order to differentiate between robots.
 	
 ### To run the client that interfaces with Misty enter the following command from within the PyClient directory
 ```python client.py```
@@ -52,10 +52,10 @@
 ## Possible Issues and their solutions:
 
 ### If running program off of Boise State's VPN.
-The IP addresses in the files client.py and index.js will need to be changed to match the IP address of the machine in which you plan to run the node server on.
+The srever IP address in the config file will need to be changed to match the IP address of the machine in which you plan to run the node server on.
 
 ### Misty's IP address is subject to change from network to network due to other Local Devices. 
-If at first there's no response double check Misty's IP address through the Misty app and make sure that it matches the IP address in client.py
+If at first there's no response double check Misty's IP address through the Misty app and make sure that it matches the IP address in the config file
 
 ## Known bugs to be fixed
 Once streaming video or audio is initiated it can't be stopped
