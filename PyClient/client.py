@@ -116,5 +116,4 @@ def connect_error():
 # When the socket disconnects
 @sio.event
 def disconnect():
-    print("I'm disconnected!")
-    
+    print("I'm disconnected!")    
