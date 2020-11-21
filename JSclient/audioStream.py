@@ -7,14 +7,11 @@ import pyaudio
 import json
 
 #Loads config file
-with open("./../config.json", 'r') as file:
+with open("./../JSclient/src/config.json", 'r') as file:
     config = json.load(file)
-
-server_ip = config["server_ip"] + ":" + config["server_port"]
-
+server_ip = "http://" + config["server_ip"] + ":" + config["server_port"]
 
 queue = BlockingQueue(1000)
-
 sio = socketio.Client()
 
 """Connects to Server"""
