@@ -1,13 +1,14 @@
 /*This file when ran opens up a page in the browser where user can remotely control Misty*/
 import './index.css'
+
+const config = require(".\\config.json");
+
+var serverIp = config["server_ip"] + ":" + config["server_port"];
 /*imports the socket.io client*/
-const io = require("socket.io-client");
-const fs = require("fs");
-let rawdata = fs.readFileSync("./../config.json");
-let config = JSON.parse(rawdata);
-let serverIp = config["server_ip"] + ":" + config["server_port"];
+const io = require("socket.io-client"),
 /*Creates a client that connects ot server at the specified address*/
-let client = io.connect(serverIp);
+client = io.connect(serverIp);
+console.log(typeof(serverIp));
 
 var robots = {}
 var robots2 = {}
@@ -268,12 +269,3 @@ var streamAudio = document.getElementById("streamAudio");
       client.emit("requestAudio", {"Bool": "False"})
     }
 }
-  
-
-
-
-
-
-
-  
-
