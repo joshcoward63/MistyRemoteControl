@@ -14,7 +14,7 @@ import io
 import numpy as np
 
 #Loads config file
-with open("./../config.json", 'r') as file:
+with open("./../JSclient/src/config.json", 'r') as file:
     config =  json.load(file)
 
 #Creates the client
@@ -27,7 +27,7 @@ robot = Robot(robot_ip)
 robot.enable_avstream()
 robot.stream_av()
 name = config["robot_name"]
-server_ip = config["server_ip"] + ":" + config["server_port"]
+server_ip = "http://" + config["server_ip"] + ":" + config["server_port"]
 #Connects to server
 sio.connect(server_ip)
 
@@ -85,7 +85,7 @@ def messageStream(data):
         image = image.rotate(270)
         imgByteArr = io.BytesIO()
         image.save(imgByteArr, format='JPEG')
-        imgByteArr = imgByteArr.getvalue()
+        imgByteArr = imgByteArr.getvalu
         sio.emit("getVideo", imgByteArr)
 
 

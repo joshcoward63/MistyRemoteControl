@@ -8,32 +8,31 @@ var serverIp = config["server_ip"] + ":" + config["server_port"];
 const io = require("socket.io-client"),
 /*Creates a client that connects ot server at the specified address*/
 client = io.connect(serverIp);
-console.log(typeof(serverIp));
-
-var robots = {}
-var robots2 = {}
+var robotList = {};
 var robotSelect = document.getElementById("mySelection");
 var robotCount = 0;
 
-/*Get clients info and adds it to the robots dict*/
-client.on("getInfo", function(info){
-  var newInfo = JSON.parse(info);
-  var sid = newInfo.SID;  
-  robots[sid] = newInfo;
-  robots2[robotCount] = {"Name": newInfo["Name"], "SID": sid};
-  robotCount++;
+client.on("robotInfoBrowser", function(robotsInfo, serverRobotCount){
   var newOption = document.createElement("option");
-  newOption.text = newInfo["Name"];
-  robotSelect.options.add(newOption,1);  
+  robotCount = serverRobotCount;
+  for(var i = 1; i <= robotCount; i++){
+    robotList[i] = robotsInfo[i];
+    if(robotList[i] != null){
+      newOption.text = robotsInfo[i].Name;
+      robotSelect.options.add(newOption,i);
+    } 
+  }  
 })
 
-/*Removes robot from dict on discoonect and updates robot count*/
-client.on("robotDisconnect", function(info){
-    for (var i=0; i<robotSelect.length; i++) {
-      if (robotSelect.options[i].text == robots[info].Name)
+/*Removes robot from dict on disconnect and updates robot count*/
+client.on("robotDisconnect", function(robotNumber){
+    for (var i=0; i <= robotCount; i++) {
+      if (robotSelect.options[i].text == robotList[robotNumber].Name){
           robotSelect.remove(i);
+      }
   }
-  delete robots[info];
+  delete robotList[robotNumber];
+  console.log("robot list disconnect: ", robotList);
 })
 
 /*Changes the current robot*/
@@ -42,21 +41,21 @@ var currentRobotSID;
 robotSelect.onchange = function(){
   currentRobot = robotSelect.options[robotSelect.selectedIndex].text;
   console.log(currentRobot);
-  console.log(Object.keys(robots2).length)
-  for(var i = 0; i< Object.keys(robots2).length; i++){
-    if(robots2[i].Name == currentRobot){
-      currentRobotSID = robots2[i].SID;
+  for(var i = 1; i<= Object.keys(robotList).length; i++){
+    console.log("robot list: ", robotList);
+    if(robotList[i].Name == currentRobot){
+      currentRobotSID = robotList[i].SID;
       client.emit("selectedRobot",currentRobotSID);  
       return;
     }     
   }
-  client.emit("selectedRobot",null);        
 }
 
 /*The following buttons change the color of Misty when clicked on in the browser*/
 var greenButton = document.getElementById("greenButton");
 var blueButton = document.getElementById("blueButton");
 var redButton = document.getElementById("redButton");
+var clearButton = document.getElementById("clearButton");
 
 /*Left arm buttons*/
 var raiseLeftArm = document.getElementById("raiseLeftArm");
@@ -73,8 +72,9 @@ var lookUp = document.getElementById("lookUp");
 var lookLeft = document.getElementById("lookLeft");
 var lookRight = document.getElementById("lookRight");
 var lookDown = document.getElementById("lookDown");
+
 var currentPitch = 0;
-var currentYaw = 0
+var currentYaw = 0;
 
 /*Checks if pitch value is in between bounds*/
 function checkPitch(){
@@ -160,12 +160,12 @@ function lookUpFunc() {
 }
 
 function lookDownFunc() {
-  currentPitch = currentPitch + 5;
+  currentPitch = currentPitch + 1;
   if(checkPitch()){
     client.emit("moveHead", {"Pitch": currentPitch, "Roll": 0, "Yaw": currentYaw, "Velocity": 100});
   }
   else{
-    currentPitch = currentPitch - 5;
+    currentPitch = currentPitch - 1;
   }
 }
 
@@ -189,7 +189,6 @@ function lookLeftFunc() {
   }
 }
 
-
 /*Change color to green*/
 greenButton.onclick = function(){
   client.emit("color",{"red": 0,"green": 255,"blue": 0});
@@ -202,7 +201,10 @@ blueButton.onclick = function(){
 redButton.onclick = function(){
   client.emit("color",{"red": 255,"green": 0,"blue": 0});
 }
-
+/*Change color to original*/
+clearButton.onclick = function(){
+  client.emit("color",{"red": 255,"green": 255,"blue": 255});
+}
 
 /* Controls left arm motion*/
 raiseLeftArm.onclick = function(){

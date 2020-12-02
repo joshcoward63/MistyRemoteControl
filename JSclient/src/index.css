@@ -33,6 +33,12 @@ body {
   .button1{background-color: #4CAF50;} /* Green */
   .button2 {background-color: #008CBA;} /* Blue */
   .button3 {background-color: red;}/* red*/  
+  .button4{background-color: #65489D;}
+  .button5{
+    background-color: #65489D;
+    height: .1%;
+    font-size: 2;
+  }
 
 
   .button1:hover {
@@ -41,6 +47,10 @@ body {
     background-color: lightblue;}
   .button3:hover {
     background-color: lightcoral;}
+  .button4:hover {
+    background-color: #b38fdb;}
+  .button5:hover {
+    background-color: #b38fdb;}
   h1{
     color: #fff;
     font-size: 24px;
@@ -66,12 +76,11 @@ body {
     text-align: center;
     margin: 4px 2px;
     width: 100px;
-    height: 33;
-  } 
+    
+} 
   .head:hover{
     background-color: #b38fdb;
   }
-
   .grid-container{
   display : block;
   width : 1000px;

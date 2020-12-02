@@ -1,4 +1,5 @@
 ;/*This file creates a Nodejs server that listens for command from Misty Client and frontend Web Client*/
+const { Console } = require('console');
 var express = require('express');
 var app = express();
 const fs = require('fs');
@@ -20,29 +21,60 @@ var io = socket(server);
 /*List of connected clients and current selected Robot*/
 var clients = {}
 var currentRobotSID;
-
+var robots = {};
+var robotCount = 0;
 io.sockets.on('connection', newConnection);
  function newConnection(socket){
  	console.log("new connection: " + socket.id);
 	  io.to(socket.id).emit("robotInfo", socket.id);
+	  socket.emit("robotInfoBrowser", robots, robotCount);
 	  clients[socket.id] = null;
 	  console.log(JSON.stringify(clients))
 
 	socket.on("getInfo", function getInfo(info){
+		robotCount++;
 		info = JSON.stringify(info);
-		var sid = info["SID"];
-		clients[sid] = info;
+		clients[socket.id] = info;
+		robots[robotCount] = JSON.parse(info);
+		console.log("Robot count:" , robotCount)
+		socket.broadcast.emit("robotInfoBrowser", robots, robotCount);
+		console.log("robot info:", robots);
 		console.log("Getting info", info);
 		socket.broadcast.emit("getInfo", info);
 	})
 
-	socket.on('disconnecting', function(){		
-		socket.broadcast.emit("robotDisconnect", socket.id);
-    delete clients[socket.id];
-		console.log(clients);
+	socket.on("getRobotInfo", function(){
+		console.log(robots);
+		socket.emit("robotInfoBrowser", robots, robotCount);
+	})
+
+	socket.on('disconnecting', function(){	
+		var robotNumber;
+		try{
+			console.log(robots[1].SID);
+			for(i = 1; i <= robotCount; i++){
+				console.log(robots[i].SID);
+
+				if(robots[i].SID == socket.id){
+					robotNumber = i;
+					console.log("robot Number: ", robotNumber);
+					robotCount--;
+				}
+			}	
+			console.log("RobotNumber: ", robotNumber);
+			socket.broadcast.emit("robotDisconnect", robotNumber);
+			delete robots[robotNumber];
+			console.log("robotlist: ", robots);
+			
+		}
+		catch{
+			console.log("Disconnected Browser")
+		}
+		delete clients[socket.id];		
+		console.log("client list", clients);
 	})
 	socket.on("selectedRobot", function(SID){
-     console.log(SID);
+    	console.log(SID);
 		currentRobotSID = SID;
 	})
 	
