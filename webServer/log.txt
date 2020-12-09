@@ -1,0 +1,183 @@
+timestamp:event:value
+2020-12-9 15:50:6.21 : Head postion changed : [object Object]
+2020-12-9 15:50:6.171 : Head postion changed : [object Object]
+2020-12-9 15:50:6.172 : Head postion changed : [object Object]
+2020-12-9 15:50:6.173 : Head postion changed : [object Object]
+2020-12-9 15:50:16.716 : Current selected Robot : UN4sc55g2U2oNCMdAAAC
+2020-12-9 15:50:17.817 : Video : Playing
+2020-12-9 15:51:24.924 : Video : Stopped
+2020-12-9 15:51:33.252 : Current selected Robot : vSArAi1MY643avV-AAAD
+2020-12-9 15:51:41.986 : Video : Playing
+2020-12-9 15:52:23.290 : Video : Stopped
+2020-12-9 15:52:33.842 : Current selected Robot : CIPqYfCY-jgL8FJIAAAE
+2020-12-9 15:52:34.968 : Video : Playing
+2020-12-9 15:52:53.577 : Video : Stopped
+2020-12-9 15:53:2.229 : Current selected Robot : UvC_3kuJVKUlCjJwAAAF
+2020-12-9 15:53:3.332 : Video : Playing
+2020-12-9 15:53:8.416 : Video : Stopped
+2020-12-9 15:53:11.797 : Video : Playing
+2020-12-9 15:53:16.987 : Video : Stopped
+2020-12-9 15:53:26.530 : Current selected Robot : 7Vtr8CB5iLJIYmRqAAAG
+2020-12-9 15:53:27.373 : Video : Playing
+2020-12-9 15:53:34.35 : Head postion changed : [object Object]
+2020-12-9 15:53:34.299 : Head postion changed : [object Object]
+2020-12-9 15:53:34.551 : Head postion changed : [object Object]
+2020-12-9 15:53:34.810 : Head postion changed : [object Object]
+2020-12-9 15:53:35.75 : Head postion changed : [object Object]
+2020-12-9 15:53:35.337 : Head postion changed : [object Object]
+2020-12-9 15:53:35.599 : Head postion changed : [object Object]
+2020-12-9 15:53:35.849 : Head postion changed : [object Object]
+2020-12-9 15:53:36.113 : Head postion changed : [object Object]
+2020-12-9 15:53:37.252 : Head postion changed : [object Object]
+2020-12-9 15:53:37.504 : Head postion changed : [object Object]
+2020-12-9 15:53:38.711 : Head postion changed : [object Object]
+2020-12-9 15:53:38.973 : Head postion changed : [object Object]
+2020-12-9 15:53:39.235 : Head postion changed : [object Object]
+2020-12-9 15:53:39.497 : Head postion changed : [object Object]
+2020-12-9 15:53:39.759 : Head postion changed : [object Object]
+2020-12-9 15:53:40.20 : Head postion changed : [object Object]
+2020-12-9 15:53:40.284 : Head postion changed : [object Object]
+2020-12-9 15:53:40.546 : Head postion changed : [object Object]
+2020-12-9 15:53:40.808 : Head postion changed : [object Object]
+2020-12-9 15:53:41.70 : Head postion changed : [object Object]
+2020-12-9 15:53:41.334 : Head postion changed : [object Object]
+2020-12-9 15:53:41.598 : Head postion changed : [object Object]
+2020-12-9 15:53:41.847 : Head postion changed : [object Object]
+2020-12-9 15:53:42.98 : Head postion changed : [object Object]
+2020-12-9 15:53:42.363 : Head postion changed : [object Object]
+2020-12-9 15:53:42.627 : Head postion changed : [object Object]
+2020-12-9 15:53:42.887 : Head postion changed : [object Object]
+2020-12-9 15:53:43.149 : Head postion changed : [object Object]
+2020-12-9 15:53:43.412 : Head postion changed : [object Object]
+2020-12-9 15:53:43.676 : Head postion changed : [object Object]
+2020-12-9 15:53:43.940 : Head postion changed : [object Object]
+2020-12-9 15:53:44.190 : Head postion changed : [object Object]
+2020-12-9 15:53:44.452 : Head postion changed : [object Object]
+2020-12-9 15:53:44.716 : Head postion changed : [object Object]
+2020-12-9 15:53:44.979 : Head postion changed : [object Object]
+2020-12-9 15:53:46.659 : Head postion changed : [object Object]
+2020-12-9 15:53:46.919 : Head postion changed : [object Object]
+2020-12-9 15:53:47.179 : Head postion changed : [object Object]
+2020-12-9 15:53:47.442 : Head postion changed : [object Object]
+2020-12-9 15:53:47.705 : Head postion changed : [object Object]
+2020-12-9 15:53:47.970 : Head postion changed : [object Object]
+2020-12-9 15:53:48.230 : Head postion changed : [object Object]
+2020-12-9 15:53:48.859 : Head postion changed : [object Object]
+2020-12-9 15:53:49.116 : Head postion changed : [object Object]
+2020-12-9 15:53:49.377 : Head postion changed : [object Object]
+2020-12-9 15:53:49.640 : Head postion changed : [object Object]
+2020-12-9 15:53:49.905 : Head postion changed : [object Object]
+2020-12-9 15:53:50.168 : Head postion changed : [object Object]
+2020-12-9 15:53:50.431 : Head postion changed : [object Object]
+2020-12-9 15:53:51.662 : Head postion changed : [object Object]
+2020-12-9 15:53:51.921 : Head postion changed : [object Object]
+2020-12-9 15:53:52.183 : Head postion changed : [object Object]
+2020-12-9 15:53:52.446 : Head postion changed : [object Object]
+2020-12-9 15:53:52.711 : Head postion changed : [object Object]
+2020-12-9 15:53:52.975 : Head postion changed : [object Object]
+2020-12-9 15:54:14.656 : Video : Stopped
+2020-12-9 15:55:39.168 : Audio : Playing
+2020-12-9 15:57:31.895 : Current selected Robot : DNRmMuK9DZ7hv6F8AAAI
+2020-12-9 15:57:34.320 : Video : Playing
+2020-12-9 15:57:38.903 : Head postion changed : [object Object]
+2020-12-9 15:57:39.156 : Head postion changed : [object Object]
+2020-12-9 15:57:39.420 : Head postion changed : [object Object]
+2020-12-9 15:57:39.683 : Head postion changed : [object Object]
+2020-12-9 15:57:39.944 : Head postion changed : [object Object]
+2020-12-9 15:58:28.308 : Video : Stopped
+2020-12-9 15:58:28.756 : Audio : Stopped
+2020-12-9 15:58:39.409 : Current selected Robot : XXi39AhOc5fmImjRAAAJ
+2020-12-9 15:58:40.506 : Video : Playing
+2020-12-9 15:58:43.831 : Head postion changed : [object Object]
+2020-12-9 15:58:44.728 : Head postion changed : [object Object]
+2020-12-9 15:58:44.984 : Head postion changed : [object Object]
+2020-12-9 15:58:45.232 : Head postion changed : [object Object]
+2020-12-9 15:58:45.496 : Head postion changed : [object Object]
+2020-12-9 15:58:56.676 : Video : Stopped
+2020-12-9 15:58:58.740 : Video : Playing
+2020-12-9 15:59:3.351 : Head postion changed : [object Object]
+2020-12-9 15:59:5.886 : Head postion changed : [object Object]
+2020-12-9 15:59:7.72 : Head postion changed : [object Object]
+2020-12-9 15:59:7.894 : Head postion changed : [object Object]
+2020-12-9 15:59:8.159 : Head postion changed : [object Object]
+2020-12-9 15:59:8.422 : Head postion changed : [object Object]
+2020-12-9 15:59:8.688 : Head postion changed : [object Object]
+2020-12-9 15:59:8.951 : Head postion changed : [object Object]
+2020-12-9 15:59:9.212 : Head postion changed : [object Object]
+2020-12-9 15:59:9.476 : Head postion changed : [object Object]
+2020-12-9 15:59:10.865 : Video : Stopped
+2020-12-9 15:59:13.390 : Head postion changed : [object Object]
+2020-12-9 15:59:13.582 : Head postion changed : [object Object]
+2020-12-9 15:59:14.198 : Head postion changed : [object Object]
+2020-12-9 15:59:15.952 : Video : Playing
+2020-12-9 15:59:23.293 : Head postion changed : [object Object]
+2020-12-9 15:59:23.603 : Head postion changed : [object Object]
+2020-12-9 15:59:23.857 : Head postion changed : [object Object]
+2020-12-9 15:59:24.121 : Head postion changed : [object Object]
+2020-12-9 15:59:24.385 : Head postion changed : [object Object]
+2020-12-9 15:59:24.650 : Head postion changed : [object Object]
+2020-12-9 15:59:24.913 : Head postion changed : [object Object]
+2020-12-9 15:59:25.174 : Head postion changed : [object Object]
+2020-12-9 15:59:30.539 : Video : Stopped
+2020-12-9 15:59:32.749 : Audio : Playing
+2020-12-9 15:59:45.534 : Audio : Stopped
+2020-12-9 15:59:58.542 : Audio : Playing
+2020-12-9 16:2:25.559 : Audio : Stopped
+2020-12-9 16:8:48.645 : Head postion changed : [object Object]
+2020-12-9 16:8:48.737 : Head postion changed : [object Object]
+2020-12-9 16:8:48.737 : Head postion changed : [object Object]
+2020-12-9 16:8:48.737 : Head postion changed : [object Object]
+2020-12-9 16:8:54.836 : Current selected Robot : XXi39AhOc5fmImjRAAAJ
+2020-12-9 16:8:56.349 : Video : Playing
+2020-12-9 16:9:5.263 : Head postion changed : [object Object]
+2020-12-9 16:9:5.517 : Head postion changed : [object Object]
+2020-12-9 16:9:5.768 : Head postion changed : [object Object]
+2020-12-9 16:9:6.30 : Head postion changed : [object Object]
+2020-12-9 16:9:6.296 : Head postion changed : [object Object]
+2020-12-9 16:9:7.774 : Head postion changed : [object Object]
+2020-12-9 16:9:8.20 : Head postion changed : [object Object]
+2020-12-9 16:9:8.281 : Head postion changed : [object Object]
+2020-12-9 16:9:8.546 : Head postion changed : [object Object]
+2020-12-9 16:9:9.828 : Video : Stopped
+2020-12-9 16:9:12.645 : Video : Playing
+2020-12-9 16:9:13.198 : Video : Stopped
+2020-12-9 16:9:15.393 : Video : Playing
+2020-12-9 16:9:24.328 : Head postion changed : [object Object]
+2020-12-9 16:9:25.260 : Head postion changed : [object Object]
+2020-12-9 16:9:25.516 : Head postion changed : [object Object]
+2020-12-9 16:9:28.242 : Head postion changed : [object Object]
+2020-12-9 16:9:28.639 : Head postion changed : [object Object]
+2020-12-9 16:9:28.899 : Head postion changed : [object Object]
+2020-12-9 16:9:29.284 : Head postion changed : [object Object]
+2020-12-9 16:9:32.526 : Video : Stopped
+2020-12-9 16:19:15.722 : Head postion changed : [object Object]
+2020-12-9 16:19:15.818 : Head postion changed : [object Object]
+2020-12-9 16:19:15.818 : Head postion changed : [object Object]
+2020-12-9 16:19:15.819 : Head postion changed : [object Object]
+2020-12-9 16:19:32.640 : Current selected Robot : JW09ybdJAjzQ97IPAAAM
+2020-12-9 16:19:34.298 : Video : Playing
+2020-12-9 16:19:43.680 : Head postion changed : [object Object]
+2020-12-9 16:19:43.931 : Head postion changed : [object Object]
+2020-12-9 16:19:44.196 : Head postion changed : [object Object]
+2020-12-9 16:19:44.460 : Head postion changed : [object Object]
+2020-12-9 16:19:44.723 : Head postion changed : [object Object]
+2020-12-9 16:19:47.124 : Video : Stopped
+2020-12-9 16:19:52.376 : Head postion changed : [object Object]
+2020-12-9 16:19:52.663 : Head postion changed : [object Object]
+2020-12-9 16:19:56.212 : Video : Playing
+2020-12-9 16:20:0.688 : Head postion changed : [object Object]
+2020-12-9 16:20:0.939 : Head postion changed : [object Object]
+2020-12-9 16:20:1.203 : Head postion changed : [object Object]
+2020-12-9 16:20:1.464 : Head postion changed : [object Object]
+2020-12-9 16:20:1.715 : Head postion changed : [object Object]
+2020-12-9 16:20:2.367 : Head postion changed : [object Object]
+2020-12-9 16:20:2.617 : Head postion changed : [object Object]
+2020-12-9 16:20:2.878 : Head postion changed : [object Object]
+2020-12-9 16:20:8.409 : Head postion changed : [object Object]
+2020-12-9 16:20:8.667 : Head postion changed : [object Object]
+2020-12-9 16:20:8.929 : Head postion changed : [object Object]
+2020-12-9 16:20:9.192 : Head postion changed : [object Object]
+2020-12-9 16:20:9.456 : Head postion changed : [object Object]
+2020-12-9 16:20:9.719 : Head postion changed : [object Object]
+2020-12-9 16:20:9.984 : Head postion changed : [object Object]
+2020-12-9 16:20:12.574 : Video : Stopped

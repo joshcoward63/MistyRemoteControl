@@ -23,16 +23,16 @@ sio = socketio.Client()
 #Robot Info
 robot_ip = config["robot_ip"]
 robot = Robot(robot_ip)
-# robot.disable_avstream()
+
 robot.enable_avstream()
-robot.stream_av()
+# robot.stream_av()
 name = config["robot_name"]
 server_ip = "http://" + config["server_ip"] + ":" + config["server_port"]
 #Connects to server
 sio.connect(server_ip)
 
 next_container = None
-
+stop_thread1 = True
 #Rotates Misty's head
 @sio.on('moveHead')
 def message3(data):
@@ -54,10 +54,11 @@ def message2(data):
     y = json.loads(data)
     robot.move_arm(y["Arm"], y['Position'], y['Velocity'])
 
-
 #Thread writes and AudioFrame to string and send to client
 def consumer_thread():
     global next_container
+    global stop_thread1
+    
     print("connected, starting stream")
     stream_path = 'rtsp://{}:1936'.format(robot_ip)
     next_container = av.open(stream_path)
@@ -65,10 +66,19 @@ def consumer_thread():
     for frame in next_container.decode(input_stream):
         frame.pts = None
         sio.emit('getAudio', frame.to_ndarray().astype(np.float32).tostring())
+        if not stop_thread1:
+            break
+
+#Stops Audio stream to server
+@sio.on('stopAudio')
+def stopAudioStream(data):
+    robot.disable_avstream()
+
 
 #Streams Audio to server
 @sio.on('requestAudio')
 def messageStream2(data):
+    robot.stream_av()
     t = threading.Thread(target=consumer_thread)
     t.start()  
 
@@ -76,7 +86,7 @@ def messageStream2(data):
 @sio.on('requestVideo')
 def messageStream(data):
     global robot
-
+    robot.stream_av()
     stream_path = 'rtsp://{}:1936'.format(robot_ip)
     container = av.open(stream_path)
 
@@ -85,9 +95,13 @@ def messageStream(data):
         image = image.rotate(270)
         imgByteArr = io.BytesIO()
         image.save(imgByteArr, format='JPEG')
-        imgByteArr = imgByteArr.getvalu
+        imgByteArr = imgByteArr.getvalue()
         sio.emit("getVideo", imgByteArr)
 
+#Stops Video stream to server
+@sio.on('stopVideo')
+def stopVideoStream(data):
+    robot.disable_avstream()
 
 #Recieves text and converts it to speech for Misty
 @sio.on("text")

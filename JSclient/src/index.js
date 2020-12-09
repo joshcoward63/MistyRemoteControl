@@ -243,21 +243,21 @@ var streamVideo = document.getElementById("streamVideo");
 streamVideo.onclick = function(){
   if(document.getElementById("streamVideo").innerText === "Start Video Stream"){
     document.getElementById("streamVideo").innerText = "Stop Video Stream";
-    client.emit("requestVideo", {"Bool": "True"});  
-    client.on("getVideo", function streamvid(data){   
-
-      var arrayBufferView = new Uint8Array( data );
-      var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
-      var urlCreator = window.URL || window.webkitURL;
-      var imageUrl = urlCreator.createObjectURL( blob );
-      document.getElementById("videoSpot").setAttribute("src", imageUrl);     
-    })
+    client.emit("requestVideo");  
   }
   else{
-    document.getElementById("streamVideo").innerText = "Start Video Stream"
-    client.emit("requestVideo", {"Bool": "False"})
+    document.getElementById("streamVideo").innerText = "Start Video Stream";
+    client.emit("stopVideo");
   }
 }
+client.on("getVideo", function streamvid(data){   
+  var arrayBufferView = new Uint8Array( data );
+  var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
+  var urlCreator = window.URL || window.webkitURL;
+  var imageUrl = urlCreator.createObjectURL( blob );
+  document.getElementById("videoSpot").setAttribute("src", imageUrl);     
+})
+
 
 /*Initiates audio stream to the python-co-client*/
 var streamAudio = document.getElementById("streamAudio");
@@ -268,6 +268,6 @@ var streamAudio = document.getElementById("streamAudio");
     
     }else{
       document.getElementById("streamAudio").innerText = "Start Audio Stream"
-      client.emit("requestAudio", {"Bool": "False"})
+      client.emit("stopAudio")
     }
 }
