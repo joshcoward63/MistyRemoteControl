@@ -16,24 +16,33 @@
     ```npm install express socket.io```
 	
 ### To run the Webserver enter the following from a terminal within the webServer directory
-```npm start```
+```node  server.js```
 	
-## JavaScript Brower
-### Prior to running the JavaScript browser and the Python co-client to access Misty's remote control perform the following commands:
+## JavaScript Client
+### Prior to running the JavaScript Client and the Python co-client to access Misty's remote control perform the following commands:
 1. Open a terminal inside of the folder JSclient
 2. Enter the following command:
 	```npm install socket.io-client react-scripts```
 	
 3. For the python-co-client enter the following command:
-	```pip install python-socketio==4.4.0 threading pyaudio```
+	```pip install python-socketio==4.4.0 pyaudio```
 	
 ### To run the browser application enter the following commands in a terminal from within the JSclient directory
 1. Start the web browser
 ```npm start```
+
+Note for Linux users: the lines
+
+```
+const config = require(".\\config.json");
+var serverIp = config["server_ip"] + ":" + config["server_port"];
+```
+might not work, so you may need to hard-code `var serverIp = "ip-address:port";`
+
 2. Start the python-co-client
 ```python audioStream.py```
 
-## Python Client
+## Python Client (Misty connector)
 ### Prior to running the Python Client that interfaces with Misty enter the following commands:
 1. Open a terminal
 2. Enter the following commands:
