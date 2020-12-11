@@ -39,16 +39,15 @@
 2. Enter the following commands:
 	```pip install python-socketio==4.4.0 requests base64 av threading Pillow numpy```
 3. If you plan to use multiple robots make sure to change the robot name in the config file, ```config.json``` located in the src folder in the JSclient directory in order to differentiate between robots.
-	
-### To run the client that interfaces with Misty enter the following command from within the PyClient directory
-```python client.py```
-
-## Config File
-### The config file contains the following information:
+### Config File
+#### The config file contains the following information:
 1. Server IP address - address of the machine that the node server is hosted on
 2. Server port - port of the machine that the node server will be listening on
 3. Robot name - should be a unique named used to differentiate between connected robots.
-4. Robot IP address - address of the Misty robot, this can be found through downloading the Misty App and connecting your Misty to it using Bluetooth
+4. Robot IP address - address of the Misty robot, this can be found through downloading the Misty App and connecting your Misty to it using Bluetooth	
+
+### To run the client that interfaces with Misty enter the following command from within the PyClient directory
+```python client.py```
 
 ## Possible Issues and their solutions:
 
