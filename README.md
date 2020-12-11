@@ -47,9 +47,8 @@
 ### The config file contains the following information:
 1. Server IP address - address of the machine that the node server is hosted on
 2. Server port - port of the machine that the node server will be listening on
-3. Robot name - should be a unique named used to differentiate bewteen connected robots.
+3. Robot name - should be a unique named used to differentiate between connected robots.
 4. Robot IP address - address of the Misty robot, this can be found through downloading the Misty App and connecting your Misty to it using Bluetooth
-
 
 ## Possible Issues and their solutions:
 
@@ -60,6 +59,6 @@ The server IP address in the config file will need to be changed to match the IP
 If at first there's no response double check Misty's IP address through the Misty app and make sure that it matches the IP address in the config file
 
 ## Known Bugs
-1. Currently the config file setup is not supported on linux and will throw an error when running the JSclient browser from it. 
+- Currently the config file setup is not supported on linux and will throw an error when running the JSclient browser from it. 
 
 	
