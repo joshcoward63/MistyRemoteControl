@@ -65,5 +65,7 @@ The server IP address in the config file will need to be changed to match the IP
 ### Misty's IP address is subject to change from network to network due to other Local Devices. 
 If at first there's no response double check Misty's IP address through the Misty app and make sure that it matches the IP address in the config file
 
+## Known Bugs
+1. Currently the config file setup is not supported on linux and will throw an error when running the JSclient browser from it. 
 
 	
