@@ -43,12 +43,6 @@
 ### To run the client that interfaces with Misty enter the following command from within the PyClient directory
 ```python client.py```
 
-## When running this system make sure to run the clients and server in the following order
-1. Run WebServer
-2. Run both the JavaScript browser and the audioStream
-3. Finally run client.py to connect to Misty
-4. From this point you should be able to select any of the connected Misty's from the dropdown menu in the browser
-
 ## Config File
 ### The config file contains the following information:
 1. Server IP address - address of the machine that the node server is hosted on
