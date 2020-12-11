@@ -38,7 +38,7 @@
 1. Open a terminal
 2. Enter the following commands:
 	```pip install python-socketio==4.4.0 requests base64 av threading Pillow numpy```
-3. If you plan to use multiple robots make sure to change the robot name in the config file located in the src folder in the JSclient directory in order to differentiate between robots.
+3. If you plan to use multiple robots make sure to change the robot name in the config file, ```config.json``` located in the src folder in the JSclient directory in order to differentiate between robots.
 	
 ### To run the client that interfaces with Misty enter the following command from within the PyClient directory
 ```python client.py```
