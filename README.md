@@ -30,6 +30,15 @@
 ### To run the browser application enter the following commands in a terminal from within the JSclient directory
 1. Start the web browser
 ```npm start```
+
+Note for Linux users: the lines
+
+```
+const config = require(".\\config.json");
+var serverIp = config["server_ip"] + ":" + config["server_port"];
+```
+might not work, so you may need to hard-code `var serverIp = ip-address:port;`
+
 2. Start the python-co-client
 ```python audioStream.py```
 
