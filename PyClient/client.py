@@ -25,14 +25,16 @@ robot_ip = config["robot_ip"]
 robot = Robot(robot_ip)
 
 robot.enable_avstream()
-# robot.stream_av()
+robot.stream_av()
+
 name = config["robot_name"]
 server_ip = "http://" + config["server_ip"] + ":" + config["server_port"]
 #Connects to server
 sio.connect(server_ip)
 
 next_container = None
-stop_thread1 = True
+run_audio = False
+run_video = False
 #Rotates Misty's head
 @sio.on('moveHead')
 def message3(data):
@@ -57,7 +59,8 @@ def message2(data):
 #Thread writes and AudioFrame to string and send to client
 def consumer_thread():
     global next_container
-    global stop_thread1
+    global run_audio
+    run_audio = True
     
     print("connected, starting stream")
     stream_path = 'rtsp://{}:1936'.format(robot_ip)
@@ -66,19 +69,20 @@ def consumer_thread():
     for frame in next_container.decode(input_stream):
         frame.pts = None
         sio.emit('getAudio', frame.to_ndarray().astype(np.float32).tostring())
-        if not stop_thread1:
+        if not run_audio:
             break
 
 #Stops Audio stream to server
 @sio.on('stopAudio')
 def stopAudioStream(data):
-    robot.disable_avstream()
-
-
+    global run_audio
+    run_audio = False
+    # robot.disable_avstream()
+    
 #Streams Audio to server
 @sio.on('requestAudio')
 def messageStream2(data):
-    robot.stream_av()
+    # robot.stream_av()
     t = threading.Thread(target=consumer_thread)
     t.start()  
 
@@ -86,7 +90,9 @@ def messageStream2(data):
 @sio.on('requestVideo')
 def messageStream(data):
     global robot
-    robot.stream_av()
+    global run_video
+    run_video = True
+    # robot.stream_av()
     stream_path = 'rtsp://{}:1936'.format(robot_ip)
     container = av.open(stream_path)
 
@@ -97,11 +103,14 @@ def messageStream(data):
         image.save(imgByteArr, format='JPEG')
         imgByteArr = imgByteArr.getvalue()
         sio.emit("getVideo", imgByteArr)
+        if not run_video: break
 
 #Stops Video stream to server
 @sio.on('stopVideo')
 def stopVideoStream(data):
-    robot.disable_avstream()
+    global run_video
+    run_video = False
+    # robot.disable_avstream()
 
 #Recieves text and converts it to speech for Misty
 @sio.on("text")
