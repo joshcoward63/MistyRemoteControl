@@ -33,7 +33,7 @@
 2. Start the python-co-client
 ```python audioStream.py```
 
-## Python Client
+## Python Client (Misty connector)
 ### Prior to running the Python Client that interfaces with Misty enter the following commands:
 1. Open a terminal
 2. Enter the following commands:
