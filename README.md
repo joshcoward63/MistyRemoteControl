@@ -49,13 +49,15 @@
 ### To run the client that interfaces with Misty enter the following command from within the PyClient directory
 ```python client.py```
 
-## Possible Issues and their solutions:
+## Troubleshooting:
 
-### If running program off of Boise State's VPN.
-The server IP address in the config file will need to be changed to match the IP address of the machine in which you plan to run the node server on.
+### Potential Gotcha: 
+If running program off of Boise State's VPN,
+- The server IP address in the config file will need to be changed to match the IP address of the machine in which you plan to run the node server on.
 
-### Misty's IP address is subject to change from network to network due to other Local Devices. 
-If at first there's no response double check Misty's IP address through the Misty app and make sure that it matches the IP address in the config file
+### Potential Gotcha:
+Misty's IP address is subject to change from network to network due to other Local Devices. 
+- If at first there's no response double check Misty's IP address through the Misty app and make sure that it matches the IP address in the config file
 
 ## Known Bugs
 - Currently the config file setup is not supported on linux and will throw an error when running the JSclient browser from it. 
