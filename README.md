@@ -25,7 +25,7 @@
 	```npm install socket.io-client react-scripts```
 	
 3. For the python-co-client enter the following command:
-	```pip install python-socketio==4.4.0 threading pyaudio```
+	```pip install python-socketio==4.4.0 pyaudio```
 	
 ### To run the browser application enter the following commands in a terminal from within the JSclient directory
 1. Start the web browser
@@ -37,7 +37,7 @@ Note for Linux users: the lines
 const config = require(".\\config.json");
 var serverIp = config["server_ip"] + ":" + config["server_port"];
 ```
-might not work, so you may need to hard-code `var serverIp = ip-address:port;`
+might not work, so you may need to hard-code `var serverIp = "ip-address:port";`
 
 2. Start the python-co-client
 ```python audioStream.py```
