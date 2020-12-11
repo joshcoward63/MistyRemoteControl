@@ -16,10 +16,10 @@
     ```npm install express socket.io```
 	
 ### To run the Webserver enter the following from a terminal within the webServer directory
-```npm start```
+```node  server.js```
 	
-## JavaScript Brower
-### Prior to running the JavaScript browser and the Python co-client to access Misty's remote control perform the following commands:
+## JavaScript Client
+### Prior to running the JavaScript Client and the Python co-client to access Misty's remote control perform the following commands:
 1. Open a terminal inside of the folder JSclient
 2. Enter the following command:
 	```npm install socket.io-client react-scripts```
