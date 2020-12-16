@@ -232,9 +232,8 @@ lowerRightArm.onclick =function(){
 var textButton = document.getElementById("textButton");
 var textBox =  document.getElementById("textMessage")
 textButton.onclick = function(){
-  console.log("click");
   var text = textBox.value;
-  console.log(text);
+  textBox.value = "";
   client.emit("recievedText", text);
 }
 
