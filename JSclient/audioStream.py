@@ -24,7 +24,7 @@ def consumer_thread():
     p = pyaudio.PyAudio()
     stream = p.open(format=pyaudio.paFloat32,
                     channels=1,
-                    rate=44100,
+                    rate=16000,
                     output=True)
 
     while True:
@@ -37,7 +37,7 @@ def consumer_thread():
             p = pyaudio.PyAudio()
             stream = p.open(format=pyaudio.paFloat32,
                     channels=1,
-                    rate=44100,
+                    rate=16000,
                     output=True)
 
 """When the socket connects"""    
