@@ -11,6 +11,7 @@ import base64
 import av
 from PIL import Image
 import io
+from collections import deque
 import numpy as np
 
 #Loads config file
@@ -24,14 +25,14 @@ sio = socketio.Client()
 robot_ip = config["robot_ip"]
 robot = Robot(robot_ip)
 
-robot.enable_avstream()
-robot.stream_av()
+# robot.enable_avstream()
+# robot.stream_av()
 
 name = config["robot_name"]
 server_ip = "http://" + config["server_ip"] + ":" + config["server_port"]
 #Connects to server
 sio.connect(server_ip)
-
+queue = deque(maxlen=1)
 next_container = None
 run_audio = False
 run_video = False
@@ -57,7 +58,7 @@ def message2(data):
     robot.move_arm(y["Arm"], y['Position'], y['Velocity'])
 
 #Thread writes and AudioFrame to string and send to client
-def consumer_thread():
+def audio_thread():
     global next_container
     global run_audio
     run_audio = True
@@ -69,8 +70,25 @@ def consumer_thread():
     for frame in next_container.decode(input_stream):
         frame.pts = None
         sio.emit('getAudio', frame.to_ndarray().astype(np.float32).tostring())
-        if not run_audio:
-            break
+        if not run_audio: break
+            
+def video_thread():
+    global queue
+    while True:
+        if len(queue) == 0:
+            time.sleep(0.25)
+            continue
+        frame = queue.popleft()
+        image = frame.to_image()
+        image = image.rotate(270)
+        imgByteArr = io.BytesIO()
+        image.save(imgByteArr, format='JPEG')
+        imgByteArr = imgByteArr.getvalue()
+        sio.emit("getVideo", imgByteArr)
+    # robot.stream_av()
+    
+t = threading.Thread(target=video_thread)
+t.start()  
 
 #Stops Audio stream to server
 @sio.on('stopAudio')
@@ -83,26 +101,19 @@ def stopAudioStream(data):
 @sio.on('requestAudio')
 def messageStream2(data):
     # robot.stream_av()
-    t = threading.Thread(target=consumer_thread)
+    t = threading.Thread(target=audio_thread)
     t.start()  
 
 ##Steams video to server
 @sio.on('requestVideo')
 def messageStream(data):
-    global robot
+    global queue
     global run_video
     run_video = True
-    # robot.stream_av()
     stream_path = 'rtsp://{}:1936'.format(robot_ip)
     container = av.open(stream_path)
-
     for frame in container.decode(video=0):
-        image = frame.to_image()
-        image = image.rotate(270)
-        imgByteArr = io.BytesIO()
-        image.save(imgByteArr, format='JPEG')
-        imgByteArr = imgByteArr.getvalue()
-        sio.emit("getVideo", imgByteArr)
+        queue.append(frame)
         if not run_video: break
 
 #Stops Video stream to server
