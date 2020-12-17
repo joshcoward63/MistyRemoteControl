@@ -1,34 +1,56 @@
-  .title {
-    text-align: center;
-    font-size: 32px;
-    font-style: inherit;
-    width: 100%;
-    padding: 2%;
-    background-color: #65489D;
-    color: white;
-  }
+.title {
+  text-align: center;
+  font-size: 32px;
+  font-style: inherit;
+  width: 100%;
+  padding: 2%;
+  background-color: #65489D;
+  color: white;
+}
 
-  img{
-    display: inline-block;
-    width: 400px;
-    height: 300px;
-    
-  }
+img{
+  display: inline-block;
+  width: 100%;
+  height: 300px;
+}
 
-body {
-    background-color: #000;
-    text-align: center;
-    padding: 0;
-    margin: 0;
+body{
+  background-color: #000;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+#zoombar{
+  overflow: hidden;
+  background-color: #65489D;
+  text-align: center;
+  display: inline-block;
+  width: 50%;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 20px;
+}
+
+#streamVideo{
+  border: none;
+  display: inline;
+  color: white;
+  background-color: #65489D;
+  padding: 15px 32px;
+  text-align: center;
   }
-  #streamVideo{
-    border: none;
-    display: inline;
-    color: white;
-    background-color: #65489D;
-    padding: 15px 32px;
-    text-align: center;
-  }
+  
+.mid1{
+  display: inline-block;
+  width: 50%;
+  height: 304px;
+  overflow: auto;
+  cursor: grab;
+  cursor: -o-grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
 
   .button1{background-color: #4CAF50;} /* Green */
   .button2 {background-color: #008CBA;} /* Blue */
@@ -41,150 +63,149 @@ body {
   }
 
 
-  .button1:hover {
-    background-color: lightgreen;}
-  .button2:hover {
-    background-color: lightblue;}
-  .button3:hover {
-    background-color: lightcoral;}
-  .button4:hover {
-    background-color: #b38fdb;}
-  .button5:hover {
-    background-color: #b38fdb;}
-  h1{
-    color: #fff;
-    font-size: 24px;
-  }
-  .button {
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-  }
+.button1:hover {
+  background-color: lightgreen;}
+.button2:hover {
+  background-color: lightblue;}
+.button3:hover {
+  background-color: lightcoral;}
+.button4:hover {
+  background-color: #b38fdb;}
+.button5:hover {
+  background-color: #b38fdb;}
+h1{
+  color: #fff;
+  font-size: 24px;
+}
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
 
-   .head{
-    border: none;
-    color: white;
-    background-color: #65489D;
-    display: inline-block;
-    padding: 15px 15px;
-    text-align: center;
-    margin: 4px 2px;
-    width: 100px;
-    
+.head{
+  left: 50%;
+  border: none;
+  color: white;
+  background-color: #65489D;
+  padding: 15px 15px;
+  text-align: center;
+  margin: 4px 2px;
+  width: 100px;    
 } 
-  .head:hover{
-    background-color: #b38fdb;
-  }
-  .grid-container{
+.head:hover{
+  background-color: #b38fdb;
+}
+.grid-container{
   display : block;
   width : 1000px;
   overflow : auto;
   margin : 0 auto;
-  }
+}
 
-  .pageBarLeft{
+.pageBarLeft{
   float : left;
   clear : none;
   min-width : 80px;
   min-height : 80px;
-  }
-  .rL{
+}
+.rL{
   background-color : #65489D;
   color: white;
   float : none;
   clear : both;
   height : 100px;
   width : 100px;
-  }
-  .pL{
+}
+.pL{
   background-color : #65489D;
   color: white;
   float : none;
   clear : both;
   height : 100px;
   width : 100px;
-  }
-  .lL{
+}
+.lL{
   background-color : #65489D;
   color: white;
   float : none;
   clear : both;
   height : 100px;
   width : 100px;
-  }
-  .pageContent{
+}
+.pageContent{
   background-color : #000;
   float : left;
   clear : none;
   height : 1000px;
   width : 800px;
-  }
+}
   .pageBarRight{
   float : left;
   clear : none;
   min-width : 80px;
   min-height : 80px;
-  }
-  .rR{
+}
+.rR{
   background-color : #65489D;
   color: white;
   float : none;
   clear : both;
   height : 100px;
   width : 100px;
-  }
-  .pR{
+}
+.pR{
   background-color : #65489D;
   color: white;
   float : none;
   clear : both;
   height : 100px;
   width : 100px;
-  }
-  .lR{
+}
+.lR{
   background-color: #65489D;
   color: white;
   float : none;
   clear : both;
   height : 100px;
   width : 100px;
-  }
-  .pageBottom{
-    float: left;
-    clear: none;
-    height: 200px;
-    width: 1000px;
-  }
+}
+.pageBottom{
+  float: left;
+  clear: none;
+  height: 200px;
+  width: 1000px;
+}
 
-  .rL:hover{
-    background-color: #b38fdb;
-  }
-  .pL:hover{
-    background-color: #b38fdb;
-  }
+.rL:hover{
+  background-color: #b38fdb;
+}
+.pL:hover{
+  background-color: #b38fdb;
+}
 
-  .lL:hover{
-    background-color: #b38fdb;
-  }
+.lL:hover{
+  background-color: #b38fdb;
+}
 
-  .rR:hover{
-    background-color: #b38fdb;
-  }
+.rR:hover{
+  background-color: #b38fdb;
+} 
 
-  .pR:hover{
-    background-color: #b38fdb;
-  }
+.pR:hover{
+  background-color: #b38fdb;
+}
 
-  .lR:hover{
-    background-color: #b38fdb;
-  }
+.lR:hover{
+  background-color: #b38fdb;
+}
   
-  #streamVideo:hover{
-    background-color: #b38fdb;
-  }
+#streamVideo:hover{
+  background-color: #b38fdb;
+}

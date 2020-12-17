@@ -13,15 +13,18 @@ var robotSelect = document.getElementById("mySelection");
 var robotCount = 0;
 
 client.on("robotInfoBrowser", function(robotsInfo, serverRobotCount){
-  var newOption = document.createElement("option");
-  robotCount = serverRobotCount;
-  for(var i = 1; i <= robotCount; i++){
-    robotList[i] = robotsInfo[i];
-    if(robotList[i] != null){
-      newOption.text = robotsInfo[i].Name;
-      robotSelect.options.add(newOption,i);
-    } 
-  }  
+  if(robotCount != serverRobotCount){
+    var newOption = document.createElement("option");
+    robotCount = serverRobotCount;
+    for(var i = 1; i <= robotCount; i++){
+      robotList[i] = robotsInfo[i];
+      if(robotList[i] != null){
+        newOption.text = robotsInfo[i].Name;
+        robotSelect.options.add(newOption,i);
+      } 
+    }
+  }
+  
 })
 
 /*Removes robot from dict on disconnect and updates robot count*/
@@ -249,6 +252,29 @@ streamVideo.onclick = function(){
     client.emit("stopVideo");
   }
 }
+
+var zoomIn = document.getElementById("zoomIn");
+var zoomOut = document.getElementById("zoomOut");
+
+zoomIn.onclick = function (){
+  var myImg = document.getElementById("videoSpot");
+  var currWidth = myImg.clientWidth;
+  if(currWidth == 2500) return false;
+   else{
+      myImg.style.width = (currWidth + 100) + "px";
+  } 
+}
+
+zoomOut.onclick = function(){
+  var myImg = document.getElementById("videoSpot");
+  var currWidth = myImg.clientWidth;
+  if(currWidth == 100) return false;
+else{
+      myImg.style.width = (currWidth - 100) + "px";
+  }
+}
+
+
 client.on("getVideo", function streamvid(data){   
   var arrayBufferView = new Uint8Array( data );
   var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );

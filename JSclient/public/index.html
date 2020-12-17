@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="description" content="width=device-width, initial-scale=1.0">
     <script src="https://localhost:5500/socket.io/2.3.0/socket.io.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <title>Robot Remote Control Center</title>
@@ -75,12 +76,17 @@
         </div>
         </div>
         <div class="pageContent">
-            <div class = "mid1">
+             <div id= "zoombar">
+                <button type="button" id="zoomIn">Zoom In</button>
+                <button type="button" id="zoomOut">Zoom Out</button>
+            </div>
+            <div class = "mid1 dragscroll">
                 <img id =videoSpot src="https://via.placeholder.com/350?text=No+Video+Found" class= "pic"></img>                
             </div>
-            <div class = "mid2">
+          
+            <!-- <div class = "mid2">
                 <audio controls> <source src="" id = "audioSpot" preload="all"></audio>
-            </div>
+            </div> -->
             <div class = "mid3">
                 <button id = "streamVideo">Start Video Stream</button>
             </div>
