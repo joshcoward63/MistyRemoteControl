@@ -13,6 +13,8 @@ var robotSelect = document.getElementById("mySelection");
 var robotCount = 0;
 
 client.on("robotInfoBrowser", function(robotsInfo, serverRobotCount){
+  console.log("options: ", robotSelect.options);
+
   if(robotCount != serverRobotCount){
     var newOption = document.createElement("option");
     robotCount = serverRobotCount;
@@ -30,8 +32,12 @@ client.on("robotInfoBrowser", function(robotsInfo, serverRobotCount){
 /*Removes robot from dict on disconnect and updates robot count*/
 client.on("robotDisconnect", function(robotNumber){
     for (var i=0; i <= robotCount; i++) {
+      console.log("robot count: ", robotCount, "i value: ", i);
+      console.log("robot list disconnect: ", robotList);
+      console.log("options: ", robotSelect.options);
       if (robotSelect.options[i].text == robotList[robotNumber].Name){
           robotSelect.remove(i);
+          break;
       }
   }
   delete robotList[robotNumber];
