@@ -57,7 +57,8 @@ io.sockets.on('connection', newConnection);
 				robotNumber = i;
 				robotCount--;
 				socket.broadcast.emit("robotDisconnect", robotNumber);
-			 	delete robots[robotNumber];	
+				 delete robots[robotNumber];	
+				 break;
 			}
 		}
 		delete clients[socket.id];		
