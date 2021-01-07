@@ -11,7 +11,7 @@
 img{
   display: inline-block;
   width: 100%;
-  height: 300px;
+  height: 640px;
 }
 
 body{
@@ -43,8 +43,8 @@ body{
   
 .mid1{
   display: inline-block;
-  width: 50%;
-  height: 304px;
+  width: 100%;
+  height: 650px;
   overflow: auto;
   cursor: grab;
   cursor: -o-grab;
