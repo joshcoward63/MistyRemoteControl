@@ -71,4 +71,6 @@ Misty's IP address is subject to change from network to network due to other Loc
 ## Known Bugs
 - Currently the config file setup is not supported on linux and will throw an error when running the JSclient browser from it. 
 
-	
+## Screenshots
+
+![Main Page](Screenshots/Screen Shot 2022-05-27 at 2.51.33 AM.png)
