@@ -73,4 +73,4 @@ Misty's IP address is subject to change from network to network due to other Loc
 
 ## Screenshots
 
-![Main Page](Screenshots/Screen Shot 2022-05-27 at 2.51.33 AM.png)
+![Main Page](Screenshots/mainPage.png)
